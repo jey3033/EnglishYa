@@ -13,10 +13,10 @@
 
 @layer base {
     h1{
-        @apply text-5xl font-bold text-center
+        @apply text-5xl font-bold text-center;
     }
     p{
-        @apply text-base text-center
+        @apply text-base text-center;
     }
 }
 
@@ -24,6 +24,12 @@
     /* kit */
     .container {
         @apply mx-auto px-4 sm:px-6 lg:px-8;
+    }
+    .sidebar {
+        @apply w-64 bg-[#27233D] shadow-md;
+    }
+    .header {
+        @apply flex h-16 items-center justify-between bg-[#27233D] px-6 shadow;
     }
     .alert{
         @apply max-w-md mx-auto p-6 border-2 rounded-lg shadow;
@@ -56,12 +62,18 @@
     .border-primary{
         @apply border-[#7469B6] hover:border-[#6558A8] dark:border-[#9187D6] dark:hover:border-[#A69DE2] active:border-[#584C96] dark:active:border-[#7B70C5];
     }
+    .text-primary{
+        @apply text-[#7469B6] hover:text-[#6558A8] dark:text-[#9187D6] dark:hover:text-[#A69DE2] active:text-[#584C96] dark:active:text-[#7B70C5];
+    }
     /* danger color */
     .color-danger{
         @apply bg-[#DC5A67] hover:bg-[#C94855] dark:bg-[#F07B86];
     }
     .border-danger{
         @apply border-[#DC5A67] hover:border-[#C94855] dark:border-[#F07B86];
+    }
+    .text-danger{
+        @apply text-[#DC5A67] hover:text-[#C94855] dark:text-[#F07B86];
     }
     /* success color */
     .color-success{
@@ -70,11 +82,17 @@
     .border-success{
         @apply border-[#4CAF88] hover:border-[#3D9673] dark:border-[#6FD6A8];
     }
+    .text-success{
+        @apply text-[#4CAF88] hover:text-[#3D9673] dark:text-[#6FD6A8];
+    }
     /* info color */
     .color-info{
         @apply bg-[#4FA3D1] hover:bg-[#378AB8] dark:bg-[#79C7F0];
     }
     .border-info{
         @apply border-[#4FA3D1] hover:border-[#378AB8] dark:border-[#79C7F0];
+    }
+    .text-info{
+        @apply text-[#4FA3D1] hover:text-[#378AB8] dark:text-[#79C7F0];
     }
 }

@@ -54,15 +54,6 @@ class UserController extends Controller
         return back()->withErrors(['email' => 'The provided credentials do not match our records.']);
     }
 
-    public function get_logged_user()
-    {
-        if (Auth::user()) {
-            return response(json_encode(Auth::user()), 200);
-        }
-
-        return response(json_encode(['message' => 'User Not Found']), 404);
-    }
-
     public function index()
     {
         $users = User::latest()->get();

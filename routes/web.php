@@ -12,6 +12,10 @@ Route::get('/', function () {
 
 Route::post('/auth', [UserController::class, 'auth']);
 
+Route::get('/dashboard', function () {
+    return view('admindashboard');
+})->middleware('auth')->name('admin-dashboard');
+
 Route::resource('transaction-headers', TransactionHeaderController::class)->middleware('auth');
 
 Route::resource('transaction-details', TransactionDetailController::class)->middleware('auth');
