@@ -1,0 +1,80 @@
+@import 'tailwindcss';
+
+@source '../../vendor/laravel/framework/src/Illuminate/Pagination/resources/views/*.blade.php';
+@source '../../storage/framework/views/*.php';
+@source '../**/*.blade.php';
+@source '../**/*.js';
+
+@theme {
+    --font-sans: 'Instrument Sans', ui-sans-serif, system-ui, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji',
+        'Segoe UI Symbol', 'Noto Color Emoji';
+    --color-primary: #1d4ed8;
+}
+
+@layer base {
+    h1{
+        @apply text-5xl font-bold text-center
+    }
+    p{
+        @apply text-base text-center
+    }
+}
+
+@layer components {
+    /* kit */
+    .container {
+        @apply mx-auto px-4 sm:px-6 lg:px-8;
+    }
+    .alert{
+        @apply max-w-md mx-auto p-6 border-2 rounded-lg shadow;
+    }
+    .card {
+        @apply bg-white shadow rounded-lg p-6 border-2 border-gray-200;
+    }
+    .close-button {
+        @apply float-end top-2 right-2 text-gray-500 hover:text-gray-700;
+    }
+
+    /* form style */
+    .login-form{
+        @apply max-w-md mx-auto p-6 flex flex-col items-center justify-center;
+    }
+    .form-group{
+        @apply mb-4 w-full;
+    }
+    .form-input{
+        @apply w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500;
+    }
+    .btn{
+        @apply text-white px-4 py-2 rounded-md;
+    }
+
+    /* primary color */
+    .color-primary{
+        @apply bg-[#7469B6] hover:bg-[#6558A8] dark:bg-[#9187D6] dark:hover:bg-[#A69DE2] active:bg-[#584C96] dark:active:bg-[#7B70C5];
+    }
+    .border-primary{
+        @apply border-[#7469B6] hover:border-[#6558A8] dark:border-[#9187D6] dark:hover:border-[#A69DE2] active:border-[#584C96] dark:active:border-[#7B70C5];
+    }
+    /* danger color */
+    .color-danger{
+        @apply bg-[#DC5A67] hover:bg-[#C94855] dark:bg-[#F07B86];
+    }
+    .border-danger{
+        @apply border-[#DC5A67] hover:border-[#C94855] dark:border-[#F07B86];
+    }
+    /* success color */
+    .color-success{
+        @apply bg-[#4CAF88] hover:bg-[#3D9673] dark:bg-[#6FD6A8];
+    }
+    .border-success{
+        @apply border-[#4CAF88] hover:border-[#3D9673] dark:border-[#6FD6A8];
+    }
+    /* info color */
+    .color-info{
+        @apply bg-[#4FA3D1] hover:bg-[#378AB8] dark:bg-[#79C7F0];
+    }
+    .border-info{
+        @apply border-[#4FA3D1] hover:border-[#378AB8] dark:border-[#79C7F0];
+    }
+}
