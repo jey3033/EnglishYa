@@ -21,6 +21,7 @@ return new class extends Migration
             $table->string('profile_path')->nullable();
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');
+            $table->foreignId('parent_id')->constrained('users');
             $table->rememberToken();
             $table->timestamps();
             $table->softDeletes();

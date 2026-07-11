@@ -68,7 +68,8 @@ class UserController extends Controller
     public function create()
     {
         $setting = Controller::getVerse();
-        return view('users.form', compact('setting'));
+        $parents = User::where('role', 'parent')->get();
+        return view('users.form', compact('setting', 'parents'));
     }
 
     public function store(Request $request)
@@ -96,7 +97,8 @@ class UserController extends Controller
     public function edit(User $user)
     {
         $setting = Controller::getVerse();
-        return view('users.form', compact('user', 'setting'));
+        $parents = User::where('role', 'parent')->get();
+        return view('users.form', compact('user', 'setting', 'parents'));
     }
 
     public function update(Request $request, User $user)
@@ -114,6 +116,10 @@ class UserController extends Controller
         $user->role = $request->role;
         $user->phone_number = $request->phone_number;
         $user->is_active = $request->is_active ? $request->is_active : 0;
+
+        if($request->parent_id && $request->parent_id > 0){
+            $user->is_active = $request->parent_id;
+        }
 
         $user->save();
 

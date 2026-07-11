@@ -6,6 +6,7 @@ use App\Http\Controllers\CourseController;
 use App\Http\Controllers\TransactionHeaderController;
 use App\Http\Controllers\TransactionDetailController;
 use App\Http\Controllers\MeetingController;
+use App\Http\Controllers\TermController;
 use App\Models\Setting;
 use App\Http\Controllers\Controller;
 
@@ -50,6 +51,13 @@ Route::post('/courses', [CourseController::class, 'store'])->name('course.store'
 Route::get('/courses/{course}/edit', [CourseController::class, 'edit'])->name('course.edit');
 Route::put('/courses/{course}', [CourseController::class, 'update'])->name('course.update');
 Route::delete('/courses/{course}', [CourseController::class, 'destroy'])->name('course.destroy');
+
+Route::get('/package', [TermController::class, 'index'])->middleware('auth')->name('term.index');
+Route::get('/package/create', [TermController::class, 'create'])->middleware('auth')->name('term.create');
+Route::post('/package', [TermController::class, 'store'])->name('term.store');
+Route::get('/package/{term}/edit', [TermController::class, 'edit'])->name('term.edit');
+Route::put('/package/{term}', [TermController::class, 'update'])->name('term.update');
+Route::delete('/package/{term}', [TermController::class, 'destroy'])->name('term.destroy');
 
 Route::get('/parents/register', [UserController::class, 'openParentRegisterForm'])->name('parents.register.form');
 Route::post('/parents/register', [UserController::class, 'openParentRegister'])->name('parents.register');

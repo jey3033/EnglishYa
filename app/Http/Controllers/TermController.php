@@ -12,8 +12,9 @@ class TermController extends Controller
      */
     public function index()
     {
-        $Term = Term::all();
-        return view('term-master', compact('term'));
+        $terms = Term::all();
+        $setting = Controller::getVerse();
+        return view('term.index', compact('terms', 'setting'));
     }
 
     /**
@@ -21,7 +22,8 @@ class TermController extends Controller
      */
     public function create()
     {
-        return view('term-form');
+        $setting = Controller::getVerse();
+        return view('term.form', compact('setting'));
     }
 
     /**
@@ -33,42 +35,52 @@ class TermController extends Controller
             'name'  =>  'required|string'
         ]);
 
-        $new = Term::create([
-            'name' => $data['name']
-        ]);
+        $new = Term::create($data);
 
-        return redirect()->intended('terms')->with('success', "Term {{$data['name']}} created successfully");
+        return redirect()->route('term.index')->with('success', "Term {$new->name} created successfully");
     }
 
     /**
      * Display the specified resource.
      */
-    public function show(term $term)
+    public function show(Term $term)
     {
-        //
+        $setting = Controller::getVerse();
+        return view('term.detail', compact('term', 'setting'));
     }
 
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(term $term)
+    public function edit(Term $term)
     {
-        //
+        $setting = Controller::getVerse();
+        return view('term.form', compact('term', 'setting'));
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, term $term)
+    public function update(Request $request, Term $term)
     {
-        //
+        $data = $request->validate([
+            'name'  =>  'required|string'
+        ]);
+
+        $term->update($data);
+
+        return redirect()->route('term.index')->with('success', "Term {$term->name} updated successfully");
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(term $term)
+    public function destroy(Term $term)
     {
-        //
+        $term->delete();
+
+        return redirect()
+            ->route('term.index')
+            ->with('success', "Term deleted successfully.");
     }
 }

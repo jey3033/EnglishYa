@@ -23,9 +23,9 @@
         </div>
     @endif
 
-    <form action="{{ $user ? route('users.update', $user) : route('users.store') }}" method="POST">
+    <form action="{{ isset($user) ? route('users.update', $user) : route('users.store') }}" method="POST">
         @csrf
-        @if ($user)
+        @if (isset($user))
             @method('PUT')
         @endif
         <div>
@@ -39,17 +39,27 @@
         <div>
             <label for="role">Role</label>
             <select name="role" id="role" required>
-                <option value="admin" {{ $user->role === 'admin' ? 'selected' : '' }}>Admin</option>
-                <option value="teacher" {{ $user->role === 'teacher' ? 'selected' : '' }}>Teacher</option>
-                <option value="parent" {{ $user->role === 'parent' ? 'selected' : '' }}>Parent</option>
-                <option value="student" {{ $user->role === 'student' ? 'selected' : '' }}>Student</option>
+                <option value="admin" {{ isset($user) && $user->role === 'admin' ? 'selected' : '' }}>Admin</option>
+                <option value="teacher" {{ isset($user) &&  $user->role === 'teacher' ? 'selected' : '' }}>Teacher</option>
+                <option value="parent" {{ isset($user) &&  $user->role === 'parent' ? 'selected' : '' }}>Parent</option>
+                <option value="student" {{ isset($user) &&  $user->role === 'student' ? 'selected' : '' }}>Student</option>
             </select>
         </div>
+        @if (isset($user) && $user->role === 'student')
+            <div>
+            <label for="parent_id">Parent</label>
+            <select name="parent_id" id="parent_id" required>
+                @foreach ($parents as $item)
+                    <option value={{ $item->id }} {{ isset($user) && $user->parent_id === $item->id ? 'selected' : '' }}>{{ $item->name }}</option>
+                @endforeach
+            </select>
+        </div>
+        @endif
         <div>
             <label for="phone_number">Phone Number</label>
             <input type="text" name="phone_number" id="phone_number" value="{{ $user->phone_number ?? old('phone_number') }}" required class="form-input" placeholder="Enter phone number">
         </div>
-        @if (!$user)
+        @if (!isset($user))
             <div>
                 <label for="password">Password</label>
                 <input type="password" name="password" id="password" required class="form-input" placeholder="Enter password">
@@ -59,7 +69,7 @@
                 <input type="password" name="password_confirmation" id="password_confirmation" required class="form-input" placeholder="Confirm password">
             </div>
         @endif
-        @if ($user)
+        @if (isset($user))
             <div class="flex items-center gap-2">
                 <input
                     type="checkbox"
@@ -87,10 +97,24 @@
         const parentSelect = document.createElement('select');
 
         new TomSelect(roleSelect, {
-            create: false,
-            controlInput: null,
-            placeholder: 'Select a role',
-        });
-    });
-    </script>
+                create: false,
+                controlInput: null,
+                placeholder: 'Select a role',
+            });
+        
+    });  
+</script>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        const parentSelect = document.getElementById('parent_id');
+
+        new TomSelect(parentSelect, {
+                plugins: ['dropdown_input'],
+                create: false,
+                placeholder: 'Select parent',
+            });
+        
+    }); 
+</script> 
 @endsection
