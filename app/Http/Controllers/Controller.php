@@ -11,7 +11,7 @@ abstract class Controller extends BaseController
 {
     use AuthorizesRequests, ValidatesRequests;
 
-    function getVerse(){
+    static function getVerse(){
         if(!Setting::first() || Setting::first()->updated_at->isToday() === false) {
             $message = Http::get('https://bible-api.com/data/kjv/random/rom,1co,2co,gal,eph,php,col,1th,2th,1ti,2ti,tit,phm,heb,jas,1pe,2pe,1jn,2jn,3jn')->json();
             $Setting = Setting::first() ?? new Setting();

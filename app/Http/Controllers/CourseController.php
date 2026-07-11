@@ -13,8 +13,9 @@ class CourseController extends Controller
     public function index()
     {
         //
-        $Data = Course::all();
-        return view('course-master', compact('data'));
+        $courses = Course::all();
+        $setting = Controller::getVerse();
+        return view('course.index', compact('courses', 'setting'));
     }
 
     /**
@@ -22,7 +23,8 @@ class CourseController extends Controller
      */
     public function create()
     {
-        return view('course-form');
+        $setting = Controller::getVerse();
+        return view('course.form', compact('setting'));
     }
 
     /**
@@ -35,12 +37,9 @@ class CourseController extends Controller
             'description'  =>  'required|string'
         ]);
 
-        $new = Course::create([
-            'name' => $data['name'],
-            'description' => $data['description']
-        ]);
+        $course = Course::create($data);
 
-        return redirect()->intended('course')->with('success', "Course {{$data['name']}} Created Successfully");
+        return redirect()->route('course.index')->with('success', "Course {$course->name} created.");
 
     }
 
@@ -49,9 +48,8 @@ class CourseController extends Controller
      */
     public function show(Course $course)
     {
-        $data = Course::where('id',$course->id)->first();
-
-        return view('course-detail', compact($data));
+        $setting = Controller::getVerse();
+        return view('course.detail', compact('course', 'setting'));
     }
 
     /**
@@ -59,9 +57,8 @@ class CourseController extends Controller
      */
     public function edit(Course $course)
     {
-        $data = Course::where('id',$course->id)->first();
-
-        return view('course-form', compact($data));
+        $setting = Controller::getVerse();
+        return view('course.form', compact('course', 'setting'));
     }
 
     /**
@@ -74,11 +71,9 @@ class CourseController extends Controller
             'description'  =>  'required|string'
         ]);
 
-        $new = Course::where('id', $course->id)->first();
-        $new->name = $data['name'];
-        $new->description = $data['description'];
+        $course->update($data);
 
-        return redirect()->intended('course')->with('success', "Course {{$data['name']}} Created Successfully");
+        return redirect()->route('course.index')->with('success', "Course {$course->name} updated.");
     }
 
     /**
@@ -86,7 +81,10 @@ class CourseController extends Controller
      */
     public function destroy(Course $course)
     {
-        $data = Course::where('id', $course->id)->first();
-        $data->delete();
+        $course->delete();
+
+        return redirect()
+            ->route('course.index')
+            ->with('success', "Course deleted successfully.");
     }
 }

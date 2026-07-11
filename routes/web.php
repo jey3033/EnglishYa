@@ -2,6 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\UserController;
+use App\Http\Controllers\CourseController;
 use App\Http\Controllers\TransactionHeaderController;
 use App\Http\Controllers\TransactionDetailController;
 use App\Http\Controllers\MeetingController;
@@ -42,6 +43,13 @@ Route::put('/users/{user}', [UserController::class, 'update'])->name('users.upda
 Route::get('/users/{user}/changepass', [UserController::class, 'changepassword'])->name('users.changepassword');
 Route::put('/users/{user}/updatepass', [UserController::class, 'updatepassword'])->name('users.updatepassword');
 Route::delete('/users/{user}', [UserController::class, 'destroy'])->name('users.destroy');
+
+Route::get('/courses', [CourseController::class, 'index'])->middleware('auth')->name('course.index');
+Route::get('/courses/create', [CourseController::class, 'create'])->middleware('auth')->name('course.create');
+Route::post('/courses', [CourseController::class, 'store'])->name('course.store');
+Route::get('/courses/{course}/edit', [CourseController::class, 'edit'])->name('course.edit');
+Route::put('/courses/{course}', [CourseController::class, 'update'])->name('course.update');
+Route::delete('/courses/{course}', [CourseController::class, 'destroy'])->name('course.destroy');
 
 Route::get('/parents/register', [UserController::class, 'openParentRegisterForm'])->name('parents.register.form');
 Route::post('/parents/register', [UserController::class, 'openParentRegister'])->name('parents.register');

@@ -1,8 +1,10 @@
 @extends('layouts.app')
 
+@section('title', 'User Form')
+
 @section('content')
 <div class="container">
-    <h1>Create User</h1>
+    <h1>User Form</h1>
 
     @if ($errors->any())
         <div class="alert color-danger my-5" id="alert">
@@ -28,11 +30,11 @@
         @endif
         <div>
             <label for="name">Name</label>
-            <input type="text" name="name" id="name" value="{{ $user->name }}" required class="form-input" placeholder="Enter name">
+            <input type="text" name="name" id="name" value="{{ $user->name ?? old('name') }}" required class="form-input" placeholder="Enter name">
         </div>
         <div>
             <label for="email">Email</label>
-            <input type="email" name="email" id="email" value="{{ $user->email }}" required class="form-input" placeholder="Enter email">
+            <input type="email" name="email" id="email" value="{{ $user->email ?? old('email') }}" required class="form-input" placeholder="Enter email">
         </div>
         <div>
             <label for="role">Role</label>
@@ -74,7 +76,7 @@
             </div>
         @endif
         <div class="flex justify-center mt-5">
-            <button type="submit" class="btn color-primary self-center">Create</button> 
+            <button type="submit" class="btn color-primary self-center">Save</button> 
         </div>
     </form>
 </div>

@@ -1,8 +1,10 @@
 @extends('layouts.app')
 
+@section('title', 'User Change Password Form')
+
 @section('content')
 <div class="container">
-    <h1>Edit User</h1>
+    <h1>User Change Password</h1>
 
     @if ($errors->any())
         <div class="alert color-danger my-5" id="alert">
