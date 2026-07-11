@@ -19,6 +19,8 @@ return new class extends Migration
             $table->string('term');
             $table->time('time_start');
             $table->time('time_end');
+            $table->foreignId('course_id')->constrained('courses');
+            $table->foreignId('terms_id')->constrained('terms');
             $table->foreignId('parent_id')->constrained('users');
             $table->foreignId('student_id')->constrained('users');
             $table->foreignId('teacher_id')->constrained('users');

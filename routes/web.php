@@ -6,6 +6,7 @@ use App\Http\Controllers\TransactionHeaderController;
 use App\Http\Controllers\TransactionDetailController;
 use App\Http\Controllers\MeetingController;
 use App\Models\Setting;
+use App\Http\Controllers\Controller;
 
 Route::get('/', function () {
     return view('login');
@@ -14,7 +15,7 @@ Route::get('/', function () {
 Route::post('/auth', [UserController::class, 'auth']);
 
 Route::get('/dashboard', function () {
-    $setting = Setting::first();
+    $setting = Controller::getVerse();
     return view('admindashboard', compact('setting'));
 })->middleware('auth')->name('admin-dashboard');
 
@@ -31,6 +32,8 @@ Route::get('/users/create', [UserController::class, 'create'])->name('users.crea
 Route::post('/users', [UserController::class, 'store'])->name('users.store');
 Route::get('/users/{user}/edit', [UserController::class, 'edit'])->name('users.edit');
 Route::put('/users/{user}', [UserController::class, 'update'])->name('users.update');
+Route::get('/users/{user}/changepass', [UserController::class, 'changepassword'])->name('users.changepassword');
+Route::put('/users/{user}/updatepass', [UserController::class, 'updatepassword'])->name('users.updatepassword');
 Route::delete('/users/{user}', [UserController::class, 'destroy'])->name('users.destroy');
 
 Route::get('/parents/register', [UserController::class, 'openParentRegisterForm'])->name('parents.register.form');

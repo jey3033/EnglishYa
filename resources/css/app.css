@@ -8,6 +8,7 @@
 @theme {
     --font-sans: 'Instrument Sans', ui-sans-serif, system-ui, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji',
         'Segoe UI Symbol', 'Noto Color Emoji';
+    /* --color-primary: #7469B6; */
 }
 
 @layer base {
@@ -15,7 +16,7 @@
         @apply text-5xl font-bold text-center;
     }
     p{
-        @apply text-base text-center;
+        @apply text-base;
     }
 }
 
@@ -28,7 +29,7 @@
         @apply w-64 bg-[#27233D] shadow-md;
     }
     .header {
-        @apply flex h-16 items-center justify-between bg-[#27233D] px-6 shadow;
+        @apply flex items-center justify-between bg-[#27233D] px-6 shadow;
     }
     .logo-container {
         @apply flex h-16 items-center justify-center;
@@ -55,22 +56,25 @@
         @apply bg-white shadow rounded-lg p-6 border-2 border-gray-200;
     }
     .main-card {
-        @apply bg-white shadow rounded-lg p-6 border-2 border-gray-200 ms-6 mt-6;
+        @apply bg-white shadow rounded-lg p-6 border-2 border-gray-200 odd:ms-6 even:me-6 mt-6;
     }
     .card-header {
-        @apply flex items-center justify-between mb-4;
+        @apply flex items-center mb-4;
     }
     .card-icon{
-        @apply w-10 h-10 flex items-center justify-center rounded-full;
+        @apply w-10 flex items-center justify-center rounded-full;
     }
     .card-title {
-        @apply text-lg font-semibold mb-4;
+        @apply text-lg font-semibold;
     }
     .card-body {
         @apply text-gray-700;
     }
     .close-button {
         @apply float-end top-2 right-2 text-gray-500 hover:text-gray-700;
+    }
+    .table{
+        @apply w-full text-left;
     }
 
     /* form style */
@@ -84,7 +88,7 @@
         @apply w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500;
     }
     .btn{
-        @apply text-white px-4 py-2 rounded-md;
+        @apply text-white px-4 py-2 rounded-md h-10;
     }
 
     /* primary color */

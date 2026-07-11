@@ -37,4 +37,14 @@ class TransactionDetail extends Model
     {
         return $this->belongsTo(Report::class);
     }
+
+    public function course(): BelongsTo
+    {
+        return $this->belongsTo(Course::class);
+    }
+
+    public function term(): BelongsTo
+    {
+        return $this->belongsTo(Term::class);
+    }
 }
