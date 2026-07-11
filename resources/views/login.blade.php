@@ -7,10 +7,16 @@
     @vite(['resources/css/app.css', 'resources/js/app.js'])
 </head>
 <body>
-    <div class="container">
-        <div class="card">
-            <h1>Welcome to EnglishYa !</h1>
-            <p>Learn English with us and improve your skills.</p>
+    <div class="login-container">
+        <div class="card logo-card text-white">
+            
+            <h1 class="logo-login">
+                <img src="{{ asset('images/Logo.png') }}" alt="Logo" class="logo-image-login"/>
+            </h1>
+            <h1 class="logo-text">
+                Welcome to EnglishYa !
+            </h1>
+            <p class="text-center">Learn English with us and improve your skills.</p>
             @if ($errors->any())
                 <div class="alert color-danger" id="error-alert">
                     <button
@@ -37,7 +43,7 @@
                     <label for="password">Password:</label>
                     <input type="password" id="password" name="password" required class="form-input">
                 </div>
-                <button type="submit" class="btn color-primary">Login</button>
+                <button type="submit" class="btn color-info">Login</button>
             </form>
         </div>
     </div>

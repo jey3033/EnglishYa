@@ -14,6 +14,13 @@ Route::get('/', function () {
 
 Route::post('/auth', [UserController::class, 'auth']);
 
+Route::post('/logout', function( Request $request) {
+    Auth::logout();
+    $request->session()->invalidate();
+    $request->session()->regenerateToken();
+    return redirect()->route('login');
+})->middleware('auth')->name('logout');
+
 Route::get('/dashboard', function () {
     $setting = Controller::getVerse();
     return view('admindashboard', compact('setting'));

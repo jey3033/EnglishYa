@@ -8,12 +8,12 @@
 @theme {
     --font-sans: 'Instrument Sans', ui-sans-serif, system-ui, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji',
         'Segoe UI Symbol', 'Noto Color Emoji';
-    /* --color-primary: #7469B6; */
+    --color-sidebar: #2A273F;
 }
 
 @layer base {
     h1{
-        @apply text-5xl font-bold text-center;
+        @apply text-3xl font-bold text-center;
     }
     p{
         @apply text-base;
@@ -22,14 +22,26 @@
 
 @layer components {
     /* kit */
+    .login-container{
+        @apply min-h-screen flex items-center justify-center bg-[#F8F8FC];
+    }
+    .logo-card{
+        @apply bg-[#7469B6] w-full max-w-md ;
+    }
+    .logo-login{
+        @apply justify-items-center;
+    }
+    .logo-image-login {
+        @apply h-40 w-auto flex;
+    }
     .container {
         @apply mx-auto px-4 sm:px-6 lg:px-8;
     }
     .sidebar {
-        @apply w-64 bg-[#27233D] shadow-md;
+        @apply w-64 bg-sidebar shadow-md;
     }
     .header {
-        @apply flex items-center justify-between bg-[#27233D] px-6 shadow;
+        @apply flex items-center justify-between bg-sidebar px-6 shadow;
     }
     .logo-container {
         @apply flex h-16 items-center justify-center;
@@ -53,7 +65,7 @@
         @apply max-w-md mx-auto p-6 border-2 rounded-lg shadow;
     }
     .card {
-        @apply bg-white shadow rounded-lg p-6 border-2 border-gray-200;
+        @apply shadow rounded-lg p-6 border-2 border-gray-200;
     }
     .main-card {
         @apply bg-white shadow rounded-lg p-6 border-2 border-gray-200 odd:ms-6 even:me-6 mt-6;
@@ -133,5 +145,15 @@
     }
     .text-info{
         @apply text-[#4FA3D1] hover:text-[#378AB8] dark:text-[#79C7F0];
+    }
+    /* warning color */
+    .color-warning{
+        @apply bg-[#F2B84B] hover:bg-[#E3A42E] dark:bg-[#FFD06A];
+    }
+    .border-warning{
+        @apply border-[#F2B84B] hover:border-[#E3A42E] dark:border-[#FFD06A];
+    }
+    .text-warning{
+        @apply text-[#F2B84B] hover:text-[#E3A42E] dark:text-[#FFD06A];
     }
 }
