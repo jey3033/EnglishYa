@@ -88,6 +88,7 @@ class UserController extends Controller
             'role' => $request->role,
             'phone_number' => $request->phone_number,
             'password' => Hash::make($request->password),
+            'parent_id' => $request->parent_id ? $request->parent_id : 0,
             'is_active' => true,
         ]);
 
@@ -115,6 +116,7 @@ class UserController extends Controller
         $user->email = $request->email;
         $user->role = $request->role;
         $user->phone_number = $request->phone_number;
+        $user->parent_id = $request->parent_id ? $request->parent_id : 0;
         $user->is_active = $request->is_active ? $request->is_active : 0;
 
         if($request->parent_id && $request->parent_id > 0){

@@ -45,16 +45,15 @@
                 <option value="student" {{ isset($user) &&  $user->role === 'student' ? 'selected' : '' }}>Student</option>
             </select>
         </div>
-        @if (isset($user) && $user->role === 'student')
-            <div>
+        <div id="parent_id-container">
             <label for="parent_id">Parent</label>
             <select name="parent_id" id="parent_id" required>
+                <option value="0">Select Parent</option>
                 @foreach ($parents as $item)
                     <option value={{ $item->id }} {{ isset($user) && $user->parent_id === $item->id ? 'selected' : '' }}>{{ $item->name }}</option>
                 @endforeach
             </select>
         </div>
-        @endif
         <div>
             <label for="phone_number">Phone Number</label>
             <input type="text" name="phone_number" id="phone_number" value="{{ $user->phone_number ?? old('phone_number') }}" required class="form-input" placeholder="Enter phone number">
@@ -92,16 +91,30 @@
 </div>
 
 <script>
+    $(document).ready(function () {
+        if($('#role').val() == "student"){
+            $('#parent_id-container').show();
+        }else{
+            $('#parent_id-container').hide();
+        }
+    });
+
     document.addEventListener('DOMContentLoaded', function () {
         const roleSelect = document.getElementById('role');
         const parentSelect = document.createElement('select');
 
         new TomSelect(roleSelect, {
-                create: false,
-                controlInput: null,
-                placeholder: 'Select a role',
-            });
+            create: false,
+            controlInput: null,
+            placeholder: 'Select a role',
+        });
         
+        $('#role').change(function (e) { 
+            console.log($(this).val());
+            if($(this).val() == "student"){
+                $('#parent_id-container').show();
+            } 
+        });
     });  
 </script>
 
@@ -110,10 +123,10 @@
         const parentSelect = document.getElementById('parent_id');
 
         new TomSelect(parentSelect, {
-                plugins: ['dropdown_input'],
-                create: false,
-                placeholder: 'Select parent',
-            });
+            plugins: ['dropdown_input'],
+            create: false,
+            placeholder: 'Select parent',
+        });
         
     }); 
 </script> 

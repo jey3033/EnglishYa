@@ -23,6 +23,7 @@ class DatabaseSeeder extends Seeder
             'password' => 'Admin2026',
             'role' => 'admin',
             'is_active' => true,
+            'parent_id' => 0
 
         ]);
     }
