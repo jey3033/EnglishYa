@@ -8,7 +8,6 @@
 @theme {
     --font-sans: 'Instrument Sans', ui-sans-serif, system-ui, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji',
         'Segoe UI Symbol', 'Noto Color Emoji';
-    --color-primary: #1d4ed8;
 }
 
 @layer base {
@@ -31,11 +30,44 @@
     .header {
         @apply flex h-16 items-center justify-between bg-[#27233D] px-6 shadow;
     }
+    .logo-container {
+        @apply flex h-16 items-center justify-center;
+    }
+    .logo{
+        @apply text-2xl font-bold text-white;
+    }
+    .logo-image {
+        @apply h-12 w-auto float-left;
+    }
+    .logo-text{
+        @apply text-2xl ms-5;
+    }
+    .navigation {
+        @apply space-y-2 p-4;
+    }
+    .navigation-link {
+        @apply flex items-center gap-3 rounded-lg px-4 py-2;
+    }
     .alert{
         @apply max-w-md mx-auto p-6 border-2 rounded-lg shadow;
     }
     .card {
         @apply bg-white shadow rounded-lg p-6 border-2 border-gray-200;
+    }
+    .main-card {
+        @apply bg-white shadow rounded-lg p-6 border-2 border-gray-200 ms-6 mt-6;
+    }
+    .card-header {
+        @apply flex items-center justify-between mb-4;
+    }
+    .card-icon{
+        @apply w-10 h-10 flex items-center justify-center rounded-full;
+    }
+    .card-title {
+        @apply text-lg font-semibold mb-4;
+    }
+    .card-body {
+        @apply text-gray-700;
     }
     .close-button {
         @apply float-end top-2 right-2 text-gray-500 hover:text-gray-700;
@@ -64,6 +96,9 @@
     }
     .text-primary{
         @apply text-[#7469B6] hover:text-[#6558A8] dark:text-[#9187D6] dark:hover:text-[#A69DE2] active:text-[#584C96] dark:active:text-[#7B70C5];
+    }
+    .hover-primary{
+        @apply hover:bg-[#7469B6] hover:text-white dark:hover:bg-[#9187D6] dark:hover:text-white;
     }
     /* danger color */
     .color-danger{

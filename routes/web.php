@@ -5,6 +5,7 @@ use App\Http\Controllers\UserController;
 use App\Http\Controllers\TransactionHeaderController;
 use App\Http\Controllers\TransactionDetailController;
 use App\Http\Controllers\MeetingController;
+use App\Models\Setting;
 
 Route::get('/', function () {
     return view('login');
@@ -13,7 +14,8 @@ Route::get('/', function () {
 Route::post('/auth', [UserController::class, 'auth']);
 
 Route::get('/dashboard', function () {
-    return view('admindashboard');
+    $setting = Setting::first();
+    return view('admindashboard', compact('setting'));
 })->middleware('auth')->name('admin-dashboard');
 
 Route::resource('transaction-headers', TransactionHeaderController::class)->middleware('auth');

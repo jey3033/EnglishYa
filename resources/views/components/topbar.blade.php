@@ -1,8 +1,8 @@
 <header class="header text-white">
     {{-- Bible Verse --}}
     <div>
-        <p class="italic text-white">"Commit your work to the Lord..."</p>
-        <span class="text-sm text-white">Proverbs 16:3</span>
+        <p class="italic text-white">{{ $setting->verse }}</p>
+        <span class="text-sm text-white">{{ $setting->verse_reference }}</span>
     </div>
     {{-- User --}}
     <div class="flex items-center gap-4">

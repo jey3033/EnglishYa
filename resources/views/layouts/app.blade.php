@@ -12,9 +12,8 @@
         @include('components.sidebar')
         <div class="flex flex-1 flex-col">
             @include('components.topbar')
-            <main class="flex-1 p-6">
-                @yield('content')
-            </main>
+            
+            @yield('content')
         </div>
     </div>
 
