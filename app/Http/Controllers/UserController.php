@@ -25,11 +25,11 @@ class UserController extends Controller
             if (in_array($request->route()?->getName(), ['users.profile.edit', 'users.profile.update', 'users.me', 'parents.register.form', 'parents.register'])) {
                 return $next($request);
             }
-            if(Auth::user()){
-                if (Auth::user()->role !== 'admin') {
-                    abort(403, 'Access denied. Admin only.');
-                }
-            }
+            // if(Auth::user()){
+            //     if (Auth::user()->role !== 'admin') {
+            //         abort(403, 'Access denied. Admin only.');
+            //     }
+            // }
             Controller::getVerse();
 
             return $next($request);
@@ -53,7 +53,10 @@ class UserController extends Controller
                 return back()->withErrors(['email' => 'Your account is deactivated. Please contact the administrator.']);
             }
             $request->session()->regenerate();
-            return redirect()->intended('/dashboard');
+            if(Auth::user()->role == 'admin') return redirect()->intended('/dashboard');
+            if(Auth::user()->role == 'teacher') return redirect()->route('teacher.index');
+            if(Auth::user()->role == 'parent') return redirect()->route('parent.index');
+            if(Auth::user()->role == 'student') return redirect()->route('student.index');
         }
         return back()->withErrors(['email' => 'The provided credentials do not match our records.']);
     }
