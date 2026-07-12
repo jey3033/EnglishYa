@@ -3,8 +3,8 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\CourseController;
-use App\Http\Controllers\TransactionHeaderController;
-use App\Http\Controllers\TransactionDetailController;
+use App\Http\Controllers\StudentDataController;
+use App\Http\Controllers\TransactionController;
 use App\Http\Controllers\MeetingController;
 use App\Http\Controllers\TermController;
 use App\Http\Controllers\ParentController;
@@ -56,8 +56,20 @@ Route::get('/package/{term}/edit', [TermController::class, 'edit'])->name('term.
 Route::put('/package/{term}', [TermController::class, 'update'])->name('term.update');
 Route::delete('/package/{term}', [TermController::class, 'destroy'])->name('term.destroy');
 
-Route::get('/transaction', [TransactionHeaderController::class, 'index'])->middleware('auth')->name('transaction.index');
+Route::get('/student', [StudentDataController::class, 'index'])->middleware('auth')->name('student.index');
+Route::get('/student/{student}/edit', [StudentDataController::class, 'edit'])->name('student.edit');
+Route::put('/student/{student}', [StudentDataController::class, 'update'])->name('student.update');
+Route::delete('/student/{student}', [StudentDataController::class, 'destroy'])->name('student.destroy');
 
+Route::get('/transaction', [TransactionController::class, 'index'])->middleware('auth')->name('transaction.index');
+Route::get('/transaction/create', [TransactionController::class, 'create'])->middleware('auth')->name('transaction.create');
+Route::post('/transaction', [TransactionController::class, 'store'])->middleware('auth')->name('transaction.store');
+Route::get('/transaction/{transaction}/detail', [TransactionController::class, 'index'])->middleware('auth')->name('transaction.show');
+Route::get('/transaction/{transaction}/edit', [TransactionController::class, 'index'])->middleware('auth')->name('transaction.edit');
+Route::delete('/transaction/{transaction}', [TransactionController::class, 'index'])->middleware('auth')->name('transaction.destroy');
+
+
+// Parent Dashboard
 Route::get('/parents', [ParentController::class, 'index'])->name('parent.index');
 
 Route::get('/parents/child', [ParentController::class, 'childindex'])->name('parent.child.index');
@@ -74,9 +86,16 @@ Route::get('/parents/transaction', [ParentTransactionController::class, 'index']
 Route::get('/parents/schedule', [ParentScheduleController::class, 'index'])->name('parent.schedule.index');
 Route::get('/parents/report', [ParentReportController::class, 'index'])->name('parent.report.index');
 
+// Student Dashboard
 Route::get('/students', [StudentController::class, 'index'])->name('student.index');
 
+
+// Teacher Dashboard
 Route::get('/teachers', [TeacherController::class, 'index'])->name('teacher.index');
 
+//API
+Route::get('/parents/{parent}/students', [ParentController::class, 'students'])->name('parent.students');
+
+// Misc
 Route::get('/profile-picture', [UserController::class, 'editProfilePictureForm'])->name('users.profile.edit');
 Route::post('/profile-picture', [UserController::class, 'updateProfilePicture'])->name('users.profile.update');

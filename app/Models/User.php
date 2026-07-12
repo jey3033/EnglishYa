@@ -2,17 +2,22 @@
 
 namespace App\Models;
 
+use App\Models\TransactionHeader;
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Database\Factories\UserFactory;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
+use Illuminate\Database\Eloquent\Concerns\HasUuids;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Relations\HasOne;
 
 class User extends Authenticatable
 {
     /** @use HasFactory<UserFactory> */
-    use HasFactory, Notifiable, SoftDeletes;
+    use HasFactory, Notifiable, SoftDeletes, HasUuids;
 
     /**
      * The attributes that are mass assignable.
@@ -40,6 +45,11 @@ class User extends Authenticatable
         'remember_token',
     ];
 
+    public function getRouteKeyName()
+    {
+        return 'uuid';
+    }
+
     /**
      * Get the attributes that should be cast.
      *
@@ -54,13 +64,23 @@ class User extends Authenticatable
         ];
     }
 
-    public function parent(): HasMany
+    public function children(): HasMany
     {
-        return $this->hasMany(User::class, 'parent_id', 'id');
+        return $this->hasMany(User::class, 'parent_id');
     }
 
-    public function kid(): HasOne
+    public function parent(): BelongsTo
     {
-        return $this->hasOne(User::class, 'id', 'parent_id');
+        return $this->belongsTo(User::class, 'parent_id');
+    }
+
+    public function data(): HasOne
+    {
+        return $this->hasOne(StudentData::class, 'student_id');
+    }
+
+    public function transaction(): HasMany
+    {
+        return $this->hasMany(TransactionHeader::class, 'user_id');
     }
 }

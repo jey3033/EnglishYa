@@ -37,7 +37,7 @@
             <textarea name="description" id="description" required class="form-input" placeholder="Description for the Course">{{ $course->description ?? old('description') }}</textarea>
         </div>
         <div class="flex justify-center mt-5">
-            <button type="submit" class="btn color-primary self-center">Save</button> 
+            <button type="submit" class="btn btn-primary self-center">Save</button> 
         </div>
     </form>
 </div>

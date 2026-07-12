@@ -1,13 +1,12 @@
 @extends('layouts.app')
 
+@section('title', 'Student Enrollment')
+
 @section('content')
-<div class="container mt-4">
-    <div class="d-flex justify-content-between align-items-center mb-3">
-        <h1>Transaction Headers</h1>
-        <a class="btn btn-primary" href="{{ route('transaction-headers.create') }}">Create New Transaction</a>
-    </div>
-    <table class="table table-striped table-bordered">
-        <thead class="table-light">
+<div class="container">
+    <h1>Student Enrollment</h1>
+    <table border="1">
+        <thead>
             <tr>
                 <th>ID</th>
                 <th>Invoice</th>
@@ -28,13 +27,18 @@
                 <td>{{ $transaction->parent->name }}</td>
                 <td>{{ $transaction->teacher->name }}</td>
                 <td>
-                    <a class="btn btn-sm btn-info" href="{{ route('transaction-headers.show', $transaction) }}">View</a>
-                    <a class="btn btn-sm btn-secondary" href="{{ route('transaction-headers.edit', $transaction) }}">Edit</a>
-                    <button type="button" class="btn btn-sm btn-danger open-delete-modal" data-url="{{ route('transaction-headers.destroy', $transaction) }}" data-name="Invoice {{ $transaction->invoice }}">Delete</button>
+                    <a href="{{ route('transaction.show', $transaction) }}">View</a>
+                    <a href="{{ route('transaction.edit', $transaction) }}">Edit</a>
+                    <form action="{{ route('transaction.destroy', $transaction) }}" method="POST" style="display:inline;">
+                        @csrf
+                        @method('DELETE')
+                        <button type="submit" onclick="return confirm('Are you sure?')">Delete</button>
+                    </form>
                 </td>
             </tr>
             @endforeach
         </tbody>
     </table>
+    <a href="{{ route('transaction-headers.index') }}">Back to My Transactions</a>
 </div>
 @endsection

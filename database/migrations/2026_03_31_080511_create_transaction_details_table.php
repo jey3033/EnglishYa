@@ -13,18 +13,13 @@ return new class extends Migration
     {
         Schema::create('transaction_details', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('transaction_header_id')->constrained('transaction_headers')->onDelete('cascade');
-            $table->foreignId('report_id')->constrained('reports')->onDelete('cascade');
+            $table->foreignId('header_id')->constrained('transaction_headers')->onDelete('cascade');
+            $table->foreignId('report_id')->nullable()->constrained('reports')->onDelete('cascade');
             $table->double('price_per_hour');
             $table->integer('hours')->default(1);
             $table->double('subtotal');
-            $table->text('detail');
             $table->timestamps();
             $table->softDeletes();
-        });
-
-        Schema::table('reports', function (Blueprint $table) {
-            $table->foreignId('transaction_detail_id')->constrained('transaction_details');
         });
     }
 

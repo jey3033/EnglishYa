@@ -5,10 +5,11 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Illuminate\Database\Eloquent\Concerns\HasUuids;
 
 class Meeting extends Model
 {
-    use SoftDeletes;
+    use SoftDeletes, HasUuids;
 
     protected $fillable = [
         'date',
@@ -19,6 +20,11 @@ class Meeting extends Model
         'student_id',
         'teacher_id',
     ];
+
+    public function getRouteKeyName()
+    {
+        return 'uuid';
+    }
 
     protected function casts(): array
     {

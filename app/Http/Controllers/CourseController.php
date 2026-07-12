@@ -37,19 +37,14 @@ class CourseController extends Controller
             'description'  =>  'required|string'
         ]);
 
-        $course = Course::create($data);
+        $course = Course::create([
+            'uuid' => Str::uuid(),
+            'name' => $data['name'],
+            'description' => $data['description'],
+        ]);
 
         return redirect()->route('course.index')->with('success', "Course {$course->name} created.");
 
-    }
-
-    /**
-     * Display the specified resource.
-     */
-    public function show(Course $course)
-    {
-        $setting = Controller::getVerse();
-        return view('course.detail', compact('course', 'setting'));
     }
 
     /**

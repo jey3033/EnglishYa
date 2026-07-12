@@ -1,159 +1,348 @@
 @import 'tailwindcss';
 
+@import "tom-select/dist/css/tom-select.css";
+
 @source '../../vendor/laravel/framework/src/Illuminate/Pagination/resources/views/*.blade.php';
 @source '../../storage/framework/views/*.php';
 @source '../**/*.blade.php';
 @source '../**/*.js';
 
+/* ======================================================
+   THEME
+====================================================== */
+
 @theme {
-    --font-sans: 'Instrument Sans', ui-sans-serif, system-ui, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji',
-        'Segoe UI Symbol', 'Noto Color Emoji';
+
+    --font-sans:
+        'Instrument Sans',
+        ui-sans-serif,
+        system-ui,
+        sans-serif;
+
+    /* Layout */
+
+    --color-page: #F8F8FC;
     --color-sidebar: #2A273F;
+    --color-card: #FFFFFF;
+
+    /* Primary */
+
+    --color-primary: #7469B6;
+    --color-primary-hover: #6558A8;
+    --color-primary-active: #584C96;
+
+    --color-primary-light: #9187D6;
+    --color-primary-light-hover: #A69DE2;
+
+    /* Success */
+
+    --color-success: #4CAF88;
+    --color-success-hover: #3D9673;
+    --color-success-light: #6FD6A8;
+
+    /* Danger */
+
+    --color-danger: #DC5A67;
+    --color-danger-hover: #C94855;
+    --color-danger-light: #F07B86;
+
+    /* Warning */
+
+    --color-warning: #F2B84B;
+    --color-warning-hover: #E3A42E;
+    --color-warning-light: #FFD06A;
+
+    /* Info */
+
+    --color-info: #4FA3D1;
+    --color-info-hover: #378AB8;
+    --color-info-light: #79C7F0;
+
+    /* Neutral */
+
+    --color-border: #E5E7EB;
+    --color-text: #374151;
+    --color-muted: #6B7280;
 }
 
+/* ======================================================
+   BASE
+====================================================== */
+
 @layer base {
+
     h1{
         @apply text-3xl font-bold text-center;
     }
+
     p{
-        @apply text-base;
+        @apply text-base text-text;
     }
+
 }
 
+/* ======================================================
+   COMPONENTS
+====================================================== */
+
 @layer components {
-    /* kit */
+
+    /* ---------- Layout ---------- */
+
+    .container{
+        @apply mx-auto px-4 sm:px-6 lg:px-8;
+    }
+
     .login-container{
-        @apply min-h-screen flex items-center justify-center bg-[#F8F8FC];
+        @apply min-h-screen flex items-center justify-center bg-page;
     }
+
+    .sidebar{
+        @apply w-64 bg-sidebar shadow-md;
+    }
+
+    .header{
+        @apply flex items-center justify-between bg-sidebar px-6 shadow;
+    }
+
+    /* ---------- Logo ---------- */
+
     .logo-card{
-        @apply bg-[#7469B6] w-full max-w-md ;
+        @apply bg-primary w-full max-w-md;
     }
+
+    .logo-container{
+        @apply flex h-16 items-center justify-center;
+    }
+
     .logo-login{
         @apply justify-items-center;
     }
-    .logo-image-login {
-        @apply h-40 w-auto flex;
+
+    .logo-image{
+        @apply h-12 w-auto;
     }
-    .container {
-        @apply mx-auto px-4 sm:px-6 lg:px-8;
+
+    .logo-image-login{
+        @apply h-40 w-auto;
     }
-    .sidebar {
-        @apply w-64 bg-sidebar shadow-md;
-    }
-    .header {
-        @apply flex items-center justify-between bg-sidebar px-6 shadow;
-    }
-    .logo-container {
-        @apply flex h-16 items-center justify-center;
-    }
+
     .logo{
         @apply text-2xl font-bold text-white;
     }
-    .logo-image {
-        @apply h-12 w-auto float-left;
-    }
+
     .logo-text{
         @apply text-2xl ms-5;
     }
-    .navigation {
+
+    /* ---------- Navigation ---------- */
+
+    .navigation{
         @apply space-y-2 p-4;
     }
+
     .navigation-link {
-        @apply flex items-center gap-3 rounded-lg px-4 py-2;
+        @apply flex items-center gap-3 rounded-lg px-4 py-2 text-white/80 transition-all duration-200;
     }
-    .alert{
-        @apply max-w-md mx-auto p-6 border-2 rounded-lg shadow;
+
+    .navigation-link:hover {
+        @apply bg-primary text-white;
     }
-    .card {
-        @apply shadow rounded-lg p-6 border-2 border-gray-200;
+    
+    .navigation-link.active {
+        @apply bg-primary text-white shadow-md;
     }
-    .main-card {
-        @apply bg-white shadow rounded-lg p-6 border-2 border-gray-200 odd:ms-6 even:me-6 mt-6;
+
+    /* ---------- Card ---------- */
+
+    .card{
+        @apply border border-border rounded-lg shadow p-6;
     }
-    .card-header {
+
+    .main-card{
+        @apply bg-card border border-border rounded-lg shadow p-6 odd:ms-6 even:me-6 mt-6;
+    }
+
+    .card-header{
         @apply flex items-center mb-4;
     }
+
     .card-icon{
-        @apply w-10 flex items-center justify-center rounded-full;
+        @apply flex items-center justify-center w-10 h-10 rounded-full;
     }
-    .card-title {
+
+    .card-title{
         @apply text-lg font-semibold;
     }
-    .card-body {
-        @apply text-gray-700;
+
+    .card-body{
+        @apply text-text;
     }
-    .close-button {
-        @apply float-end top-2 right-2 text-gray-500 hover:text-gray-700;
+
+    /* ---------- Profile ---------- */
+
+    .profile-picture{
+        @apply mx-auto w-24 h-24 rounded-full object-cover border-2 border-primary shadow;
     }
+
+    /* ---------- Alert ---------- */
+
+    .alert{
+        @apply max-w-md mx-auto p-6 border rounded-lg shadow;
+    }
+
+    .close-button{
+        @apply float-end text-muted hover:text-text;
+    }
+
+    /* ---------- Table ---------- */
+
     .table{
         @apply w-full text-left;
     }
 
-    /* form style */
+    /* ---------- Forms ---------- */
+
     .login-form{
-        @apply max-w-md mx-auto p-6 flex flex-col items-center justify-center;
+        @apply max-w-md mx-auto p-6 flex flex-col items-center;
     }
+
     .form-group{
         @apply mb-4 w-full;
     }
-    .form-input{
-        @apply w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500;
-    }
-    .btn{
-        @apply text-white px-4 py-2 rounded-md h-10;
+
+    .info-div{
+        @apply my-4;
     }
 
-    /* primary color */
-    .color-primary{
-        @apply bg-[#7469B6] hover:bg-[#6558A8] dark:bg-[#9187D6] dark:hover:bg-[#A69DE2] active:bg-[#584C96] dark:active:bg-[#7B70C5];
+    .form-input {
+        @apply w-full rounded-md border border-gray-300 px-4 py-2;
     }
-    .border-primary{
-        @apply border-[#7469B6] hover:border-[#6558A8] dark:border-[#9187D6] dark:hover:border-[#A69DE2] active:border-[#584C96] dark:active:border-[#7B70C5];
+
+    .form-input:focus {
+        @apply outline-none border-primary-light ring-2 ring-primary-light;
     }
-    .text-primary{
-        @apply text-[#7469B6] hover:text-[#6558A8] dark:text-[#9187D6] dark:hover:text-[#A69DE2] active:text-[#584C96] dark:active:text-[#7B70C5];
+
+    .form-input::file-selector-button {
+        @apply mr-4 rounded-lg border-0 bg-primary px-4 py-2 text-white;
     }
-    .hover-primary{
-        @apply hover:bg-[#7469B6] hover:text-white dark:hover:bg-[#9187D6] dark:hover:text-white;
+
+    .form-input::file-selector-button:hover {
+        @apply bg-primary-hover;
     }
-    /* danger color */
-    .color-danger{
-        @apply bg-[#DC5A67] hover:bg-[#C94855] dark:bg-[#F07B86];
+
+    /* ---------- Buttons ---------- */
+
+    .btn{
+        @apply h-10 rounded-md px-4 py-2 text-white;
     }
-    .border-danger{
-        @apply border-[#DC5A67] hover:border-[#C94855] dark:border-[#F07B86];
+
+    .btn-primary{
+        @apply bg-primary
     }
-    .text-danger{
-        @apply text-[#DC5A67] hover:text-[#C94855] dark:text-[#F07B86];
+
+    .btn-primary:hover{
+        @apply bg-primary-hover
     }
-    /* success color */
-    .color-success{
-        @apply bg-[#4CAF88] hover:bg-[#3D9673] dark:bg-[#6FD6A8];
+    
+    .btn-success{
+        @apply bg-success
     }
-    .border-success{
-        @apply border-[#4CAF88] hover:border-[#3D9673] dark:border-[#6FD6A8];
+
+    .btn-success:hover{
+        @apply bg-success-hover
     }
-    .text-success{
-        @apply text-[#4CAF88] hover:text-[#3D9673] dark:text-[#6FD6A8];
+
+    .btn-info{
+        @apply bg-info 
     }
-    /* info color */
-    .color-info{
-        @apply bg-[#4FA3D1] hover:bg-[#378AB8] dark:bg-[#79C7F0];
+
+    .btn-info:hover{
+        @apply bg-info-hover
     }
-    .border-info{
-        @apply border-[#4FA3D1] hover:border-[#378AB8] dark:border-[#79C7F0];
+
+    .btn-warning{
+        @apply bg-warning
     }
-    .text-info{
-        @apply text-[#4FA3D1] hover:text-[#378AB8] dark:text-[#79C7F0];
+
+    .btn-warning:hover{
+        @apply bg-warning-hover
     }
-    /* warning color */
-    .color-warning{
-        @apply bg-[#F2B84B] hover:bg-[#E3A42E] dark:bg-[#FFD06A];
+
+    .btn-danger{
+        @apply bg-danger
     }
-    .border-warning{
-        @apply border-[#F2B84B] hover:border-[#E3A42E] dark:border-[#FFD06A];
+
+    .btn-danger:hover{
+        @apply bg-danger-hover
     }
-    .text-warning{
-        @apply text-[#F2B84B] hover:text-[#E3A42E] dark:text-[#FFD06A];
-    }
+
+}
+/* Third Party Stuff */
+/* ---------- Tom Select ---------- */
+
+.ts-wrapper {
+    width: 100%;
+}
+
+.ts-wrapper .ts-control {
+    width: 100%;
+    min-height: 42px;
+    padding: 0.5rem 1rem;
+    border: 1px solid var(--color-border);
+    border-radius: 0.375rem;
+    background: #fff;
+    box-shadow: none;
+    transition:
+        border-color .2s ease,
+        box-shadow .2s ease;
+}
+
+.ts-wrapper.focus .ts-control,
+.ts-wrapper.input-active .ts-control {
+    border-color: var(--color-primary);
+    box-shadow: 0 0 0 3px rgb(116 105 182 / 25%);
+}
+
+.ts-wrapper .ts-control input {
+    opacity: 1;
+    visibility: visible;
+    color: var(--color-text);
+    flex: 1;
+    min-width: 0;
+}
+
+.ts-wrapper .ts-control input::placeholder {
+    color: var(--color-muted);
+    opacity: 1;
+    visibility: visible;
+}
+
+.ts-wrapper .ts-control > div {
+    color: var(--color-text);
+}
+
+.ts-dropdown {
+    margin-top: 4px;
+    border: 1px solid var(--color-border);
+    border-radius: 0.375rem;
+    background: #fff;
+    box-shadow: 0 8px 20px rgb(0 0 0 / 10%);
+}
+
+.ts-dropdown .option {
+    padding: 0.5rem 1rem;
+    color: var(--color-text);
+    cursor: pointer;
+}
+
+.ts-dropdown .option:hover,
+.ts-dropdown .active {
+    background: var(--color-primary);
+    color: #fff;
+}
+
+.ts-dropdown .selected {
+    background: var(--color-primary-light);
+    color: black;
 }

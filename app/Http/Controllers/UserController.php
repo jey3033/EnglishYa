@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\User;
 use App\Models\Setting;
 use Illuminate\Http\Request;
+use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
@@ -86,6 +87,7 @@ class UserController extends Controller
         ]);
 
         $user = User::create([
+            'uuid' => Str::uuid(),
             'name' => $request->name,
             'email' => $request->email,
             'role' => $request->role,

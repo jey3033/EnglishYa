@@ -14,11 +14,12 @@ class TransactionHeader extends Model
     use HasFactory, SoftDeletes;
 
     protected $fillable = [
+        'uuid',
         'invoice',
         'date',
         'total',
-        'parent_id',
-        'teacher_id',
+        'student_id',
+        'detail',
     ];
 
     protected function casts(): array
@@ -29,23 +30,18 @@ class TransactionHeader extends Model
         ];
     }
 
-    public function user(): BelongsTo
+    public function getRouteKeyName()
     {
-        return $this->belongsTo(User::class);
+        return 'uuid';
     }
 
-    public function parent(): BelongsTo
+    public function student(): BelongsTo
     {
-        return $this->belongsTo(User::class, 'parent_id');
+        return $this->belongsTo(User::class, 'student_id');
     }
 
-    public function teacher(): BelongsTo
+    public function details(): HasMany
     {
-        return $this->belongsTo(User::class, 'teacher_id');
-    }
-
-    public function transactionDetails(): HasMany
-    {
-        return $this->hasMany(TransactionDetail::class);
+        return $this->hasMany(TransactionDetail::class, 'header_id');
     }
 }

@@ -88,4 +88,14 @@ class ParentController extends Controller
 
         return redirect()->route('parent.child.index')->with('success', "Children {$child->name}'s password updated.");
     }
+
+    // API Section
+    public function students(User $parent){
+        return response()->json(
+            User::where('parent_id', $parent->id)
+                ->where('role', 'student')
+                ->orderBy('name')
+                ->get(['id', 'name'])
+        );
+    }
 }

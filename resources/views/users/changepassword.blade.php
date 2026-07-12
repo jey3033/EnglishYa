@@ -53,7 +53,7 @@
             <input type="password" name="password_confirmation" id="password_confirmation" class="form-input">
         </div>
         <div class="flex justify-center mt-3">
-            <button type="submit" class="btn color-primary">Update</button>
+            <button type="submit" class="btn btn-primary">Update</button>
         </div>
     </form>
 </div>

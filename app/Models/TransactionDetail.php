@@ -13,6 +13,8 @@ class TransactionDetail extends Model
     protected $fillable = [
         'transaction_header_id',
         'report_id',
+        'course_id',
+        'term_id',
         'price_per_hour',
         'hours',
         'subtotal',
@@ -30,21 +32,21 @@ class TransactionDetail extends Model
 
     public function transactionHeader(): BelongsTo
     {
-        return $this->belongsTo(TransactionHeader::class);
+        return $this->belongsTo(TransactionHeader::class, 'header_id');
     }
 
     public function report(): BelongsTo
     {
-        return $this->belongsTo(Report::class);
+        return $this->belongsTo(Report::class, 'report_id');
     }
 
     public function course(): BelongsTo
     {
-        return $this->belongsTo(Course::class);
+        return $this->belongsTo(Course::class, 'course_id');
     }
 
     public function term(): BelongsTo
     {
-        return $this->belongsTo(Term::class);
+        return $this->belongsTo(Term::class, 'term_id');
     }
 }

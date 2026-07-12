@@ -11,16 +11,13 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('transaction_headers', function (Blueprint $table) {
+        Schema::create('student_data', function (Blueprint $table) {
             $table->id();
-            $table->string('invoice');
-            $table->date('date');
-            $table->double('total');
-            $table->text('detail');
             $table->foreignId('student_id')->constrained('users');
-            // $table->foreignId('teacher_id')->constrained('users');
+            $table->string('profile_path')->nullable();
+            $table->string('preferred_language');
+            $table->text('notes');
             $table->timestamps();
-            $table->softDeletes();
         });
     }
 
@@ -29,6 +26,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('transaction_headers');
+        Schema::dropIfExists('student_data');
     }
 };

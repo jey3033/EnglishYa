@@ -16,9 +16,9 @@
             <h1 class="logo-text">
                 Welcome to EnglishYa !
             </h1>
-            <p class="text-center">Learn English with us and improve your skills.</p>
+            <p class="text-center text-white">Learn English with us and improve your skills.</p>
             @if ($errors->any())
-                <div class="alert color-danger" id="error-alert">
+                <div class="alert bg-danger" id="error-alert">
                     <button
                         type="button"
                         onclick="dismissError()"
@@ -43,7 +43,7 @@
                     <label for="password">Password:</label>
                     <input type="password" id="password" name="password" required class="form-input">
                 </div>
-                <button type="submit" class="btn color-info">Login</button>
+                <button type="submit" class="btn btn-info">Login</button>
             </form>
         </div>
     </div>

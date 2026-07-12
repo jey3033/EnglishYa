@@ -18,6 +18,9 @@ return new class extends Migration
             $table->timestamps();
             $table->softDeletes();
         });
+        Schema::table('transaction_details', function (Blueprint $table) {
+            $table->foreignId('course_id')->constrained('courses')->cascadeOnDelete();
+        });
     }
 
     /**
@@ -26,5 +29,8 @@ return new class extends Migration
     public function down(): void
     {
         Schema::dropIfExists('courses');
+        Schema::table('transaction_details', function (Blueprint $table) {
+            $table->dropForeign('course_id');
+        });
     }
 };

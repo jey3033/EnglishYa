@@ -3,10 +3,15 @@
 namespace App\Http\Controllers;
 
 use App\Models\TransactionHeader;
+use App\Models\User;
+use App\Models\Term;
+use App\Models\Course;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Str;
 
-class TransactionHeaderController extends Controller
+class TransactionController extends Controller
 {
     public function __construct()
     {
@@ -24,14 +29,15 @@ class TransactionHeaderController extends Controller
     public function index()
     {
         if (Auth::user()->role === 'admin') {
-            $transactions = TransactionHeader::with('parent', 'teacher')->latest()->get();
+            $transactions = TransactionHeader::latest()->get();
         } else {
             $transactions = TransactionHeader::where('parent_id', Auth::id())
                 ->orWhere('teacher_id', Auth::id())
                 ->latest()->get();
         }
 
-        return view('transaction_headers.index', compact('transactions'));
+        $setting = Controller::getVerse();
+        return view('transaction.index', compact('transactions', 'setting'));
     }
 
     /**
@@ -39,7 +45,13 @@ class TransactionHeaderController extends Controller
      */
     public function create()
     {
-        return view('transaction_headers.create');
+        $setting = Controller::getVerse();
+        $parents = User::where('role','parent')->get();
+        $students = User::where('role','student')->get();
+        $teachers = User::where('role','teacher')->get();
+        $courses = Course::all();
+        $terms = Term::all();
+        return view('transaction.form', compact('setting', 'parents', 'teachers', 'students', 'courses', 'terms'));
     }
 
     /**
@@ -50,20 +62,47 @@ class TransactionHeaderController extends Controller
         $request->validate([
             'invoice' => 'required|string|unique:transaction_headers',
             'date' => 'required|date',
-            'total' => 'required|numeric|min:0',
-            'parent_id' => 'required|exists:users,id',
-            'teacher_id' => 'required|exists:users,id',
+            'student_id' => 'required|exists:users,id',
+
+            'details' => 'required|array|min:1',
+
+            'details.*.course_id' => 'required|exists:courses,id',
+            'details.*.term_id' => 'required|exists:terms,id',
+            'details.*.price' => 'required|numeric|min:0',
         ]);
 
-        TransactionHeader::create([
-            'invoice' => $request->invoice,
-            'date' => $request->date,
-            'total' => $request->total,
-            'parent_id' => $request->parent_id,
-            'teacher_id' => $request->teacher_id,
-        ]);
+        DB::transaction(function () use ($request) {
+            $transaction = TransactionHeader::create([
+                'uuid' => Str::uuid(),
+                'invoice' => $request->invoice,
+                'date' => $request->date,
+                'total' => 0,
+                'student_id' => $request->student_id,
+                // 'teacher_id' => $request->teacher_id,
+                'detail' => $request->detail ?? "",
+            ]);
 
-        return redirect()->route('transaction-headers.index')->with('success', 'Transaction created successfully.');
+            $total = 0;
+            foreach ($request->details as $detail) {
+                $term = Term::findOrFail($detail['term_id']);
+                $subtotal = $detail['price'] * $term->meeting_number;
+                $total += $subtotal;
+
+                $transaction->details()->create([
+                    'course_id' => $detail['course_id'],
+                    'term_id' => $detail['term_id'],
+                    'price_per_hour' => $detail['price'],
+                    'hours' => $term->meeting_number,
+                    'subtotal' => $subtotal
+                ]);                
+            }
+
+            $transaction->total = $total;
+
+            $transaction->save();
+        });
+
+        return redirect()->route('transaction.index')->with('success', 'Transaction created successfully.');
     }
 
     /**
@@ -106,7 +145,7 @@ class TransactionHeaderController extends Controller
 
         $transactionHeader->update($request->only(['invoice', 'date', 'total', 'parent_id', 'teacher_id']));
 
-        return redirect()->route('transaction-headers.index')->with('success', 'Transaction updated successfully.');
+        return redirect()->route('transaction.index')->with('success', 'Transaction updated successfully.');
     }
 
     /**
@@ -116,7 +155,7 @@ class TransactionHeaderController extends Controller
     {
         $transactionHeader->delete();
 
-        return redirect()->route('transaction-headers.index')->with('success', 'Transaction deleted successfully.');
+        return redirect()->route('transaction.index')->with('success', 'Transaction deleted successfully.');
     }
 
     public function admin()

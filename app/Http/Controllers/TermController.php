@@ -32,23 +32,19 @@ class TermController extends Controller
     public function store(Request $request)
     {
         $data = $request->validate([
-            'name'  =>  'required|string'
+            'name'  =>  'required|string',
+            'meeting_number' => 'required|integer'
         ]);
 
-        $new = Term::create($data);
+        $new = Term::create([
+            'uuid' => Str::uuid(),
+            'name' => $data['name'],
+            'meeting_number' => $data['meeting_number'],
+        ]);
 
         return redirect()->route('term.index')->with('success', "Term {$new->name} created successfully");
     }
-
-    /**
-     * Display the specified resource.
-     */
-    public function show(Term $term)
-    {
-        $setting = Controller::getVerse();
-        return view('term.detail', compact('term', 'setting'));
-    }
-
+    
     /**
      * Show the form for editing the specified resource.
      */
@@ -64,7 +60,8 @@ class TermController extends Controller
     public function update(Request $request, Term $term)
     {
         $data = $request->validate([
-            'name'  =>  'required|string'
+            'name'  =>  'required|string',
+            'meeting_number' => 'required|integer'
         ]);
 
         $term->update($data);

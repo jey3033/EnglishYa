@@ -20,6 +20,7 @@ return new class extends Migration
             $table->foreignId('parent_id')->constrained('users');
             $table->foreignId('student_id')->constrained('users');
             $table->foreignId('teacher_id')->constrained('users');
+            $table->foreignId('transaction_detail_id')->constrained('transaction_details');
             $table->timestamps();
             $table->softDeletes();
         });

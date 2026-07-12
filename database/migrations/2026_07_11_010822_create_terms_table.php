@@ -14,8 +14,13 @@ return new class extends Migration
         Schema::create('terms', function (Blueprint $table) {
             $table->id();
             $table->string('name');
+            $table->integer('meeting_number');
             $table->timestamps();
             $table->softDeletes();
+        });
+
+        Schema::table('transaction_details', function (Blueprint $table) {
+             $table->foreignId('term_id')->constrained('terms')->cascadeOnDelete();
         });
     }
 
@@ -25,5 +30,8 @@ return new class extends Migration
     public function down(): void
     {
         Schema::dropIfExists('terms');
+        Schema::table('transaction_details', function (Blueprint $table) {
+            $table->dropForeign('terms_id');
+        });
     }
 };

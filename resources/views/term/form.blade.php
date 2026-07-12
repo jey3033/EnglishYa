@@ -28,12 +28,16 @@
         @if (isset($term))
             @method('PUT')
         @endif
-        <div>
+        <div class='info-div'>
             <label for="name">Name</label>
             <input type="text" name="name" id="name" value="{{ $term->name ?? old('name') }}" required class="form-input" placeholder="Enter name">
         </div>
+        <div class='info-div'>
+            <label for="meeting_number">Meeting Number</label>
+            <input type="text" name="meeting_number" id="meeting_number" value="{{ $term->meeting_number ?? old('meeting_number') }}" required class="form-input" placeholder="Enter name">
+        </div>
         <div class="flex justify-center mt-5">
-            <button type="submit" class="btn color-primary self-center">Save</button> 
+            <button type="submit" class="btn btn-primary self-center">Save</button> 
         </div>
     </form>
 </div>
