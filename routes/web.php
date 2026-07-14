@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use Illuminate\Http\Request;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\CourseController;
 use App\Http\Controllers\StudentDataController;
@@ -64,9 +65,9 @@ Route::delete('/student/{student}', [StudentDataController::class, 'destroy'])->
 Route::get('/transaction', [TransactionController::class, 'index'])->middleware('auth')->name('transaction.index');
 Route::get('/transaction/create', [TransactionController::class, 'create'])->middleware('auth')->name('transaction.create');
 Route::post('/transaction', [TransactionController::class, 'store'])->middleware('auth')->name('transaction.store');
-Route::get('/transaction/{transaction}/detail', [TransactionController::class, 'index'])->middleware('auth')->name('transaction.show');
-Route::get('/transaction/{transaction}/edit', [TransactionController::class, 'index'])->middleware('auth')->name('transaction.edit');
-Route::delete('/transaction/{transaction}', [TransactionController::class, 'index'])->middleware('auth')->name('transaction.destroy');
+Route::get('/transaction/{transaction}/edit', [TransactionController::class, 'edit'])->middleware('auth')->name('transaction.edit');
+Route::put('/transaction/{transaction}/update', [TransactionController::class, 'update'])->middleware('auth')->name('transaction.update');
+Route::delete('/transaction/{transaction}', [TransactionController::class, 'destroy'])->middleware('auth')->name('transaction.destroy');
 
 
 // Parent Dashboard
@@ -81,7 +82,6 @@ Route::delete('/parent/child/{child}', [ParentController::class, 'childdestroy']
 Route::delete('/parent/child/{child}/changepass', [ParentController::class, 'childchangepassword'])->name('parent.child.changepassword');
 Route::delete('/parent/child/{child}/updatepass', [ParentController::class, 'childupdatepassword'])->name('parent.child.updatepassword');
 
-Route::get('/parents/course', [ParentCourseController::class, 'index'])->name('parent.course.index');
 Route::get('/parents/transaction', [ParentTransactionController::class, 'index'])->name('parent.transaction.index');
 Route::get('/parents/schedule', [ParentScheduleController::class, 'index'])->name('parent.schedule.index');
 Route::get('/parents/report', [ParentReportController::class, 'index'])->name('parent.report.index');

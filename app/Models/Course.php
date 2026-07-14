@@ -10,10 +10,10 @@ use Illuminate\Database\Eloquent\Concerns\HasUuids;
 class Course extends Model
 {
     /** @use HasFactory<\Database\Factories\CourseFactory> */
-    use HasFactory, SoftDeletes, HasUuids;
+    use HasFactory, SoftDeletes;
 
     protected $fillable=[
-        'name', 'description'
+        'uuid', 'name', 'description'
     ];
 
     public function getRouteKeyName()

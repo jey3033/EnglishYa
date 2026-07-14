@@ -32,7 +32,6 @@
     <table class="table text-center border-separate border-spacing-y-2">
         <thead>
             <tr>
-                <th>ID</th>
                 <th>Name</th>
                 <th>Email</th>
                 <th>Role</th>
@@ -43,7 +42,6 @@
         <tbody>
             @foreach($users as $user)
                 <tr>
-                    <td>{{ $user->id }}</td>
                     <td>{{ $user->name }}</td>
                     <td>{{ $user->email }}</td>
                     <td>{{ $user->role }}</td>

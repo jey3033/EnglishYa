@@ -25,7 +25,7 @@ class TransactionHeader extends Model
     protected function casts(): array
     {
         return [
-            'date' => 'datetime',
+            'date' => 'date',
             'total' => 'float',
         ];
     }

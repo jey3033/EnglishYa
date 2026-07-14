@@ -9,12 +9,8 @@
 </head>
 <body>
     <div class="flex min-h-screen">
-        @if (Auth::user()->role == 'admin')
-            @include('components.sidebar')
-        @elseif (Auth::user()->role == 'parent')
-            @include('components.parentsidebar')
-        @endif
-        <div class="flex flex-1 flex-col">
+        @include('components.sidebar.'.Auth::User()->role)
+        <div class="bg-background flex flex-1 flex-col">
             @include('components.topbar')
             
             @yield('content')

@@ -30,7 +30,7 @@
         @endif
         <div class="info-div flex justify-center">
             <img
-                src="{{ $studentData->profile_path ? asset('storage/' . $studentData->profile_path) : "https://api.dicebear.com/9.x/personas/svg?seed=$student->name" }}"
+                src="{{ isset($studentData) && $studentData->profile_path ? asset('storage/' . $studentData->profile_path) : "https://api.dicebear.com/9.x/personas/svg?seed=$student->name" }}"
                 alt="Profile Picture"
                 class="profile-picture"
             />

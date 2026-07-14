@@ -10,6 +10,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Str;
+use Illuminate\Validation\Rule;
 
 class TransactionController extends Controller
 {
@@ -46,12 +47,10 @@ class TransactionController extends Controller
     public function create()
     {
         $setting = Controller::getVerse();
-        $parents = User::where('role','parent')->get();
         $students = User::where('role','student')->get();
-        $teachers = User::where('role','teacher')->get();
         $courses = Course::all();
         $terms = Term::all();
-        return view('transaction.form', compact('setting', 'parents', 'teachers', 'students', 'courses', 'terms'));
+        return view('transaction.form', compact('setting', 'students', 'courses', 'terms'));
     }
 
     /**
@@ -60,7 +59,7 @@ class TransactionController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'invoice' => 'required|string|unique:transaction_headers',
+            'invoice' => ['required','string', Rule::unique('transaction_headers')->ignore($transaction->id)],
             'date' => 'required|date',
             'student_id' => 'required|exists:users,id',
 
@@ -68,7 +67,7 @@ class TransactionController extends Controller
 
             'details.*.course_id' => 'required|exists:courses,id',
             'details.*.term_id' => 'required|exists:terms,id',
-            'details.*.price' => 'required|numeric|min:0',
+            'details.*.price_per_hour' => 'required|numeric|min:0',
         ]);
 
         DB::transaction(function () use ($request) {
@@ -80,20 +79,22 @@ class TransactionController extends Controller
                 'student_id' => $request->student_id,
                 // 'teacher_id' => $request->teacher_id,
                 'detail' => $request->detail ?? "",
+                'transaction_status' => 'pending'
             ]);
 
             $total = 0;
             foreach ($request->details as $detail) {
                 $term = Term::findOrFail($detail['term_id']);
-                $subtotal = $detail['price'] * $term->meeting_number;
+                $subtotal = $detail['price_per_hour'] * $term->meeting_number;
                 $total += $subtotal;
 
                 $transaction->details()->create([
                     'course_id' => $detail['course_id'],
                     'term_id' => $detail['term_id'],
-                    'price_per_hour' => $detail['price'],
+                    'price_per_hour' => $detail['price_per_hour'],
                     'hours' => $term->meeting_number,
-                    'subtotal' => $subtotal
+                    'subtotal' => $subtotal,
+                    'enrollment_status' => 'pending'
                 ]);                
             }
 
@@ -106,44 +107,60 @@ class TransactionController extends Controller
     }
 
     /**
-     * Display the specified resource.
-     */
-    public function show(TransactionHeader $transactionHeader)
-    {
-        if (Auth::user()->role !== 'admin' && $transactionHeader->parent_id !== Auth::id() && $transactionHeader->teacher_id !== Auth::id()) {
-            abort(403);
-        }
-
-        return view('transaction_headers.show', compact('transactionHeader'));
-    }
-
-    /**
      * Show the form for editing the specified resource.
      */
-    public function edit(TransactionHeader $transactionHeader)
+    public function edit(TransactionHeader $transaction)
     {
-        return view('transaction_headers.edit', compact('transactionHeader'));
+        $setting = Controller::getVerse();
+        $students = User::where('role','student')->get();
+        $courses = Course::all();
+        $terms = Term::all();
+        return view('transaction.form', compact('setting', 'students', 'courses', 'terms', 'transaction'));
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, TransactionHeader $transactionHeader)
+    public function update(Request $request, TransactionHeader $transaction)
     {
         $request->validate([
-            'invoice' => 'required|string|unique:transaction_headers,invoice,' . $transactionHeader->id,
+            'invoice' => ['required','string', Rule::unique('transaction_headers')->ignore($transaction->id)],
             'date' => 'required|date',
-            'total' => 'required|numeric|min:0',
-            'parent_id' => 'required|exists:users,id',
-            'teacher_id' => 'required|exists:users,id',
+            'student_id' => 'required|exists:users,id',
+
+            'details' => 'required|array|min:1',
+
+            'details.*.course_id' => 'required|exists:courses,id',
+            'details.*.term_id' => 'required|exists:terms,id',
+            'details.*.price_per_hour' => 'required|numeric|min:0',
         ]);
+        DB::transaction(function () use ($request, $transaction) {
+            $transaction->update([
+                'invoice' => $request->invoice,
+                'date' => $request->date,
+                'student_id' => $request->student_id,
+                'detail' => $request->detail,
+                'transaction_status' => $request->transaction_status
+            ]);
 
-        // Ensure the user is either the parent or teacher
-        if (Auth::id() != $request->parent_id && Auth::id() != $request->teacher_id) {
-            abort(403, 'You must be the parent or teacher for this transaction.');
-        }
+            $transaction->details()->delete();
+            $total = 0;
+            foreach ($request->details as $detail) {
+                $term = Term::findOrFail($detail['term_id']);
+                $subtotal = $detail['price_per_hour'] * $term->meeting_number;
+                $total += $subtotal;
 
-        $transactionHeader->update($request->only(['invoice', 'date', 'total', 'parent_id', 'teacher_id']));
+                $transaction->details()->create([
+                    'course_id' => $detail['course_id'],
+                    'term_id' => $detail['term_id'],
+                    'price_per_hour' => $detail['price_per_hour'],
+                    'hours' => $detail['hours'] ?? 1,
+                    'subtotal' => $subtotal,
+                ]);
+            }
+
+            $transaction->update(['total' => $total]);
+        });
 
         return redirect()->route('transaction.index')->with('success', 'Transaction updated successfully.');
     }
@@ -151,9 +168,10 @@ class TransactionController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(TransactionHeader $transactionHeader)
+    public function destroy(TransactionHeader $transaction)
     {
-        $transactionHeader->delete();
+        $transaction->details()->delete();
+        $transaction->delete();
 
         return redirect()->route('transaction.index')->with('success', 'Transaction deleted successfully.');
     }

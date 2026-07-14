@@ -22,6 +22,7 @@
     /* Layout */
 
     --color-page: #F8F8FC;
+    --color-background: #FBFAF2;
     --color-sidebar: #2A273F;
     --color-card: #FFFFFF;
 
@@ -291,7 +292,7 @@
     padding: 0.5rem 1rem;
     border: 1px solid var(--color-border);
     border-radius: 0.375rem;
-    background: #fff;
+    background: var(--color-background);
     box-shadow: none;
     transition:
         border-color .2s ease,
@@ -326,7 +327,7 @@
     margin-top: 4px;
     border: 1px solid var(--color-border);
     border-radius: 0.375rem;
-    background: #fff;
+    background: var(--color-background);
     box-shadow: 0 8px 20px rgb(0 0 0 / 10%);
 }
 
@@ -339,10 +340,14 @@
 .ts-dropdown .option:hover,
 .ts-dropdown .active {
     background: var(--color-primary);
-    color: #fff;
+    color: var(--color-background);
 }
 
 .ts-dropdown .selected {
     background: var(--color-primary-light);
     color: black;
+}
+
+.full .ts-control{
+    background-color: var(--color-background) !important;
 }
