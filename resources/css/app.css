@@ -157,12 +157,12 @@
     /* ---------- Card ---------- */
 
     .card{
-        @apply border border-border rounded-lg shadow p-6;
+        @apply border bg-card border-border rounded-lg shadow p-6;
     }
 
     .main-card{
         @apply bg-card border border-border rounded-lg shadow p-6 odd:ms-6 even:me-6 mt-6;
-    }
+    }   
 
     .card-header{
         @apply flex items-center mb-4;
@@ -244,6 +244,14 @@
 
     .btn-primary:hover{
         @apply bg-primary-hover
+    }
+
+    .btn-light{
+        @apply bg-primary-light
+    }
+
+    .btn-light:hover{
+        @apply bg-primary-light-hover
     }
     
     .btn-success{

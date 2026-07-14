@@ -88,6 +88,63 @@ class ParentController extends Controller
         return redirect()->route('parent.child.index')->with('success', "Children {$child->name}'s password updated.");
     }
 
+    // enrollment system
+    public function enrollindex() {
+        $setting = Controller::getVerse();
+        $children = User::where('parent_id', Auth::user()->id)->get();
+        return view('parent.enroll.index', compact('setting', 'children'));
+    }
+
+    public function enrollcreate(){
+        $setting = Controller::getVerse();
+
+        return view('parent.enroll.form', compact('setting'));
+    }
+
+    public function enrollstore(Request $request){
+        $request->validate([
+            'name' => 'required|string|max:255',
+            'email' => 'required|email|unique:users,email',
+            'password' => 'required|string|min:6|confirmed',
+            'phone_number' => 'required'
+        ]);
+
+        $user = TransactionHeader::create([
+            'name' => $request->name,
+            'email' => $request->email,
+            'role' => 'student',
+            'phone_number' => $request->phone_number,
+            'password' => Hash::make($request->password),
+            'parent_id' => Auth::user()->id,
+            'is_active' => false,
+        ]);
+
+        return redirect()->route('parent.transaction.index')->with('success', "Children {$user->name} registered");
+    }
+
+    public function enrolledit(TransactionHeader $enroll){
+        $setting = Controller::getVerse();
+        return view('parent.enroll.form', compact('setting', 'enroll'));
+    }
+
+    public function enrollupdate(TransactionHeader $enroll, Request $request){
+        $data = $request->validate([
+            'name' => 'required|string|max:255',
+            'email' => 'required|email|unique:users,email,'.$enroll->id,
+            'phone_number' => 'required'
+        ]);
+
+        $enroll->update($data);
+
+        return redirect()->route('parent.transaction.index')->with('success', "Children {$enroll->name}'s data updated");
+    }
+
+    public function enrolldestroy(TransactionHeader $enroll){
+        $enroll->delete();
+
+        return redirect()->route('parent.transaction.index')->with('success', 'User deleted.');
+    }
+
     // API Section
     public function students(User $parent){
         return response()->json(

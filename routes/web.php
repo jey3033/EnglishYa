@@ -82,7 +82,9 @@ Route::delete('/parent/child/{child}', [ParentController::class, 'childdestroy']
 Route::delete('/parent/child/{child}/changepass', [ParentController::class, 'childchangepassword'])->name('parent.child.changepassword');
 Route::delete('/parent/child/{child}/updatepass', [ParentController::class, 'childupdatepassword'])->name('parent.child.updatepassword');
 
-Route::get('/parents/transaction', [ParentTransactionController::class, 'index'])->name('parent.transaction.index');
+Route::get('/parents/transaction', [ParentController::class, 'enrollindex'])->name('parent.transaction.index');
+Route::get('/parents/transaction/create', [ParentController::class, 'enrollcreate'])->name('parent.transaction.create');
+
 Route::get('/parents/schedule', [ParentScheduleController::class, 'index'])->name('parent.schedule.index');
 Route::get('/parents/report', [ParentReportController::class, 'index'])->name('parent.report.index');
 

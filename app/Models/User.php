@@ -79,8 +79,8 @@ class User extends Authenticatable
         return $this->hasOne(StudentData::class, 'student_id');
     }
 
-    public function transaction(): HasMany
+    public function transactions(): HasMany
     {
-        return $this->hasMany(TransactionHeader::class, 'user_id');
+        return $this->hasMany(TransactionHeader::class, 'student_id');
     }
 }
