@@ -14,7 +14,6 @@ return new class extends Migration
         Schema::create('student_data', function (Blueprint $table) {
             $table->id();
             $table->foreignId('student_id')->constrained('users');
-            $table->string('profile_path')->nullable();
             $table->string('preferred_language');
             $table->text('notes');
             $table->timestamps();

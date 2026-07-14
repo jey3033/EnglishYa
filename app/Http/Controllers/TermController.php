@@ -14,7 +14,7 @@ class TermController extends Controller
     {
         $terms = Term::all();
         $setting = Controller::getVerse();
-        return view('term.index', compact('terms', 'setting'));
+        return view('admin.term.index', compact('terms', 'setting'));
     }
 
     /**
@@ -23,7 +23,7 @@ class TermController extends Controller
     public function create()
     {
         $setting = Controller::getVerse();
-        return view('term.form', compact('setting'));
+        return view('admin.term.form', compact('setting'));
     }
 
     /**
@@ -51,7 +51,7 @@ class TermController extends Controller
     public function edit(Term $term)
     {
         $setting = Controller::getVerse();
-        return view('term.form', compact('term', 'setting'));
+        return view('admin.term.form', compact('term', 'setting'));
     }
 
     /**

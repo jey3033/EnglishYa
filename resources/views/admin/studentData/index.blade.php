@@ -7,7 +7,7 @@
     <h1>Student Management</h1>
 
     @if(session('success'))
-        <div class="alert color-success my-5" id="alert">
+        <div class="alert success my-5" id="alert">
             <button
                 type="button"
                 onclick="dismissError()"

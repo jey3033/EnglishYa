@@ -7,6 +7,9 @@
     {{-- User --}}
     <div class="flex items-center gap-4">
         <div>
+            <x-avatar :user="Auth::User()" />
+        </div>
+        <div>
             <p class="font-semibold">
                 {{ Auth::user()->name }}
             </p>

@@ -54,14 +54,13 @@ class ParentController extends Controller
     }
 
     public function childupdate(User $child, Request $request){
-        $request->validate([
+        $data = $request->validate([
             'name' => 'required|string|max:255',
-            'email' => 'required|email|unique:users,email',
-            'password' => 'required|string|min:6|confirmed',
+            'email' => 'required|email|unique:users,email,'.$child->id,
             'phone_number' => 'required'
         ]);
 
-        $child::update($request);
+        $child->update($data);
 
         return redirect()->route('parent.child.index')->with('success', "Children {$child->name}'s data updated");
     }

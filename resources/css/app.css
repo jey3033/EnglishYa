@@ -103,7 +103,7 @@
     }
 
     .header{
-        @apply flex items-center justify-between bg-sidebar px-6 shadow;
+        @apply flex items-center justify-between bg-sidebar px-6 shadow py-3;
     }
 
     /* ---------- Logo ---------- */
@@ -278,6 +278,22 @@
         @apply bg-danger-hover
     }
 
+    /* Style Type */
+    .success {
+        @apply bg-success text-white;
+    }
+
+    .info {
+        @apply bg-info text-white;
+    }
+
+    .warning {
+        @apply bg-warning text-white;
+    }
+
+    .danger{
+        @apply bg-danger text-white;
+    }
 }
 /* Third Party Stuff */
 /* ---------- Tom Select ---------- */

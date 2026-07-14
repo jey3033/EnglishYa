@@ -66,14 +66,14 @@ class UserController extends Controller
     {
         $users = User::latest()->get();
         $setting = Controller::getVerse();
-        return view('users.index', compact('users', 'setting'));
+        return view('admin.users.index', compact('users', 'setting'));
     }
 
     public function create()
     {
         $setting = Controller::getVerse();
         $parents = User::where('role', 'parent')->get();
-        return view('users.form', compact('setting', 'parents'));
+        return view('admin.users.form', compact('setting', 'parents'));
     }
 
     public function store(Request $request)
@@ -104,7 +104,7 @@ class UserController extends Controller
     {
         $setting = Controller::getVerse();
         $parents = User::where('role', 'parent')->get();
-        return view('users.form', compact('user', 'setting', 'parents'));
+        return view('admin.users.form', compact('user', 'setting', 'parents'));
     }
 
     public function update(Request $request, User $user)
@@ -150,7 +150,7 @@ class UserController extends Controller
 
     public function changepassword(User $user) {
         $setting = Setting::first();
-        return view('users.changepassword', compact('user', 'setting'));
+        return view('admin.users.changepassword', compact('user', 'setting'));
     }
 
     public function updatepassword(User $user, Request $request) {

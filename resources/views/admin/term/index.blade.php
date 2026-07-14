@@ -1,13 +1,13 @@
 @extends('layouts.app')
 
-@section('title', 'Course Management')
+@section('title', 'Package Management')
 
 @section('content')
 <div class="container">
-    <h1>Course Management</h1>
+    <h1>Package Management</h1>
 
     @if(session('success'))
-        <div class="alert color-success my-5" id="alert">
+        <div class="alert success my-5" id="alert">
             <button
                 type="button"
                 onclick="dismissError()"
@@ -22,37 +22,37 @@
     @endif
 
     <div class="mb-5">
-        <a href="{{ route('course.create') }}"> <button class="btn btn-primary">
+        <a href="{{ route('term.create') }}"> <button class="btn btn-primary">
             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">
-                <path stroke-linecap="round" stroke-linejoin="round" d="M19.5 14.25v-2.625a3.375 3.375 0 0 0-3.375-3.375h-1.5A1.125 1.125 0 0 1 13.5 7.125v-1.5a3.375 3.375 0 0 0-3.375-3.375H8.25m3.75 9v6m3-3H9m1.5-12H5.625c-.621 0-1.125.504-1.125 1.125v17.25c0 .621.504 1.125 1.125 1.125h12.75c.621 0 1.125-.504 1.125-1.125V11.25a9 9 0 0 0-9-9Z" />
+                <path stroke-linecap="round" stroke-linejoin="round" d="M12 9v6m3-3H9m12 0a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z" />
             </svg>
         </button></a>
     </div>
 
-    <table class="table text-center border-separate border-spacing-2">
+    <table class="table text-center border-separate border-spacing-y-2">
         <thead>
             <tr>
                 <th>Name</th>
-                <th>Description</th>
+                <th>Meeting Number</th>
                 <th>Action</th>
             </tr>
         </thead>
         <tbody>
-            @foreach($courses as $data)
+            @foreach($terms as $data)
                 <tr>
                     <td>{{ $data->name }}</td>
-                    <td class="text-justify">{{ $data->description }}</td>
+                    <td>{{ $data->meeting_number }}</td>
                     <td>
                         <div class="flex gap-2 justify-center">
-                            <a href="{{ route('course.edit', $data) }}"><button class="btn btn-info">
+                            <a href="{{ route('term.edit', $data) }}"><button class="btn btn-info">
                                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">
                                     <path stroke-linecap="round" stroke-linejoin="round" d="m16.862 4.487 1.687-1.688a1.875 1.875 0 1 1 2.652 2.652L6.832 19.82a4.5 4.5 0 0 1-1.897 1.13l-2.685.8.8-2.685a4.5 4.5 0 0 1 1.13-1.897L16.863 4.487Zm0 0L19.5 7.125" />
                                 </svg>
                             </button></a>
-                            <form action="{{ route('course.destroy', $data) }}" method="POST" style="display:inline;">
+                            <form action="{{ route('term.destroy', $data) }}" method="POST" style="display:inline;">
                                 @csrf
                                 @method('DELETE')
-                                <button type="submit" onclick="return confirm('Delete this course?')" class="btn btn-danger">
+                                <button type="submit" onclick="return confirm('Delete this term?')" class="btn btn-danger">
                                     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">
                                         <path stroke-linecap="round" stroke-linejoin="round" d="m14.74 9-.346 9m-4.788 0L9.26 9m9.968-3.21c.342.052.682.107 1.022.166m-1.022-.165L18.16 19.673a2.25 2.25 0 0 1-2.244 2.077H8.084a2.25 2.25 0 0 1-2.244-2.077L4.772 5.79m14.456 0a48.108 48.108 0 0 0-3.478-.397m-12 .562c.34-.059.68-.114 1.022-.165m0 0a48.11 48.11 0 0 1 3.478-.397m7.5 0v-.916c0-1.18-.91-2.164-2.09-2.201a51.964 51.964 0 0 0-3.32 0c-1.18.037-2.09 1.022-2.09 2.201v.916m7.5 0a48.667 48.667 0 0 0-7.5 0" />
                                     </svg>

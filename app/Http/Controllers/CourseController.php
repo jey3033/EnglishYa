@@ -16,7 +16,7 @@ class CourseController extends Controller
         //
         $courses = Course::all();
         $setting = Controller::getVerse();
-        return view('course.index', compact('courses', 'setting'));
+        return view('admin.course.index', compact('courses', 'setting'));
     }
 
     /**
@@ -25,7 +25,7 @@ class CourseController extends Controller
     public function create()
     {
         $setting = Controller::getVerse();
-        return view('course.form', compact('setting'));
+        return view('admin.course.form', compact('setting'));
     }
 
     /**
@@ -54,7 +54,7 @@ class CourseController extends Controller
     public function edit(Course $course)
     {
         $setting = Controller::getVerse();
-        return view('course.form', compact('course', 'setting'));
+        return view('admin.course.form', compact('course', 'setting'));
     }
 
     /**

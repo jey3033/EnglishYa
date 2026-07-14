@@ -29,8 +29,8 @@ Route::post('/logout', function( Request $request) {
 
 Route::get('/dashboard', function () {
     $setting = Controller::getVerse();
-    return view('admindashboard', compact('setting'));
-})->middleware('auth')->name('admin-dashboard');
+    return view('admin.dashboard', compact('setting'));
+})->middleware('auth')->name('admin.dashboard');
 
 Route::resource('meetings', MeetingController::class)->middleware('auth');
 

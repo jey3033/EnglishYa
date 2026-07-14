@@ -55,7 +55,7 @@ class StudentDataController extends Controller
         ];
 
         if (isset($path)) {
-            $data['profile_picture'] = $path;
+            $student->update(['profile_path' => $path]);
         }
 
         StudentData::updateOrCreate(

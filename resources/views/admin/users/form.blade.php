@@ -7,7 +7,7 @@
     <h1>User Form</h1>
 
     @if ($errors->any())
-        <div class="alert bg-danger my-5" id="alert">
+        <div class="alert danger my-5" id="alert">
             <button
                 type="button"
                 onclick="dismissError()"

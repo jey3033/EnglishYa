@@ -38,7 +38,7 @@ class TransactionController extends Controller
         }
 
         $setting = Controller::getVerse();
-        return view('transaction.index', compact('transactions', 'setting'));
+        return view('admin.transaction.index', compact('transactions', 'setting'));
     }
 
     /**
@@ -50,7 +50,7 @@ class TransactionController extends Controller
         $students = User::where('role','student')->get();
         $courses = Course::all();
         $terms = Term::all();
-        return view('transaction.form', compact('setting', 'students', 'courses', 'terms'));
+        return view('admin.transaction.form', compact('setting', 'students', 'courses', 'terms'));
     }
 
     /**
@@ -115,7 +115,7 @@ class TransactionController extends Controller
         $students = User::where('role','student')->get();
         $courses = Course::all();
         $terms = Term::all();
-        return view('transaction.form', compact('setting', 'students', 'courses', 'terms', 'transaction'));
+        return view('admin.transaction.form', compact('setting', 'students', 'courses', 'terms', 'transaction'));
     }
 
     /**
@@ -174,15 +174,5 @@ class TransactionController extends Controller
         $transaction->delete();
 
         return redirect()->route('transaction.index')->with('success', 'Transaction deleted successfully.');
-    }
-
-    public function admin()
-    {
-        if (Auth::user()->role !== 'admin') {
-            abort(403, 'Access denied. Admin only.');
-        }
-
-        $transactions = TransactionHeader::with('parent', 'teacher')->latest()->get();
-        return view('transaction_headers.admin', compact('transactions'));
     }
 }

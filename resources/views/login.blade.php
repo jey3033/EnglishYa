@@ -18,7 +18,7 @@
             </h1>
             <p class="text-center text-white">Learn English with us and improve your skills.</p>
             @if ($errors->any())
-                <div class="alert bg-danger" id="error-alert">
+                <div class="alert danger" id="error-alert">
                     <button
                         type="button"
                         onclick="dismissError()"
