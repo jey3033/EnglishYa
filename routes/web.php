@@ -57,10 +57,10 @@ Route::get('/package/{term}/edit', [TermController::class, 'edit'])->name('term.
 Route::put('/package/{term}', [TermController::class, 'update'])->name('term.update');
 Route::delete('/package/{term}', [TermController::class, 'destroy'])->name('term.destroy');
 
-Route::get('/student', [StudentDataController::class, 'index'])->middleware('auth')->name('student.index');
-Route::get('/student/{student}/edit', [StudentDataController::class, 'edit'])->name('student.edit');
-Route::put('/student/{student}', [StudentDataController::class, 'update'])->name('student.update');
-Route::delete('/student/{student}', [StudentDataController::class, 'destroy'])->name('student.destroy');
+Route::get('/student', [StudentDataController::class, 'index'])->middleware('auth')->name('student-data.index');
+Route::get('/student/{student}/edit', [StudentDataController::class, 'edit'])->name('student-data.edit');
+Route::put('/student/{student}', [StudentDataController::class, 'update'])->name('student-data.update');
+Route::delete('/student/{student}', [StudentDataController::class, 'destroy'])->name('student-data.destroy');
 
 Route::get('/transaction', [TransactionController::class, 'index'])->middleware('auth')->name('transaction.index');
 Route::get('/transaction/create', [TransactionController::class, 'create'])->middleware('auth')->name('transaction.create');
@@ -84,6 +84,7 @@ Route::delete('/parent/child/{child}/updatepass', [ParentController::class, 'chi
 
 Route::get('/parents/transaction', [ParentController::class, 'enrollindex'])->name('parent.transaction.index');
 Route::get('/parents/transaction/create', [ParentController::class, 'enrollcreate'])->name('parent.transaction.create');
+Route::post('/parents/transaction', [ParentController::class, 'enrollstore'])->name('parent.transaction.store');
 
 Route::get('/parents/schedule', [ParentScheduleController::class, 'index'])->name('parent.schedule.index');
 Route::get('/parents/report', [ParentReportController::class, 'index'])->name('parent.report.index');

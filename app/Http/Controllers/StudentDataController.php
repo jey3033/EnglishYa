@@ -15,7 +15,7 @@ class StudentDataController extends Controller
     {
         $students = User::where('role', 'student')->get();
         $setting = Controller::getVerse();
-        return view('studentData.index', compact('setting', 'students'));
+        return view('admin.studentData.index', compact('setting', 'students'));
     }
 
     /**
@@ -25,7 +25,7 @@ class StudentDataController extends Controller
     {
         $studentData = StudentData::where('student_id', $student->id)->get();
         $setting = Controller::getVerse();
-        return view('studentData.form', compact('studentData', 'setting', 'student'));
+        return view('admin.studentData.form', compact('studentData', 'setting', 'student'));
     }
 
     /**
@@ -35,7 +35,7 @@ class StudentDataController extends Controller
     {
         $studentData = StudentData::where('student_id', $student->id)->first();
         $setting = Controller::getVerse();
-        return view('studentData.form', compact('studentData', 'setting', 'student'));
+        return view('admin.studentData.form', compact('studentData', 'setting', 'student'));
     }
 
     /**
@@ -63,7 +63,7 @@ class StudentDataController extends Controller
             $data
         );
 
-        return redirect()->route('student.index')->with('success', "User {$student->name}'s data has been updated");
+        return redirect()->route('student-data.index')->with('success', "User {$student->name}'s data has been updated");
     }
 
     /**
@@ -73,6 +73,6 @@ class StudentDataController extends Controller
     {
         $studentData = StudentData::where('student_id', $student->id)->first()->delete();
 
-        return redirect()->route('student.index')->with('success', "User {$student->name}'s data has been deleted");
+        return redirect()->route('student-data.index')->with('success', "User {$student->name}'s data has been deleted");
     }
 }
