@@ -91,6 +91,7 @@ Route::get('/parents/report', [ParentReportController::class, 'index'])->name('p
 
 // Student Dashboard
 Route::get('/students', [StudentController::class, 'index'])->name('student.index');
+Route::get('/students/mydata', [StudentDataController::class, 'edit'])->name('student.mydata');
 
 
 // Teacher Dashboard

@@ -23,7 +23,7 @@
         </div>
     @endif
 
-    <form action="{{ isset($student) ? route('student.update', $student) : route('users.store') }}" method="POST" enctype="multipart/form-data">
+    <form action="{{ isset($student) ? route('student-data.update', $student) : route('users.store') }}" method="POST" enctype="multipart/form-data">
         @csrf
         @if (isset($student))
             @method('PUT')
