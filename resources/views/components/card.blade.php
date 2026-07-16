@@ -7,7 +7,7 @@
 ])
 
 <div @if ($variant == 'info') class='main-card'
-    @else class='card bg-primary text-white'
+    @else class='card bg-primary text-white my-5'
     @endif >
     <div class='card-header'>
         <div class='card-icon'>

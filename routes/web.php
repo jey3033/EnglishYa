@@ -92,6 +92,11 @@ Route::get('/parents/report', [ParentReportController::class, 'index'])->name('p
 // Student Dashboard
 Route::get('/students', [StudentController::class, 'index'])->name('student.index');
 Route::get('/students/mydata', [StudentDataController::class, 'edit'])->name('student.mydata');
+Route::get('/students/transaction', [StudentController::class, 'enrollindex'])->name('student.transaction.index');
+Route::get('/students/transaction/create', [StudentController::class, 'enrollcreate'])->name('student.transaction.create');
+Route::post('/students/transaction', [StudentController::class, 'enrollstore'])->name('student.transaction.store');
+Route::get('/students/schedule', [StudentDataController::class, 'edit'])->name('student.schedule.index');
+Route::get('/students/report', [StudentDataController::class, 'edit'])->name('student.report.index');
 
 
 // Teacher Dashboard

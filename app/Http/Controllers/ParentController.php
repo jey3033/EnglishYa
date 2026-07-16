@@ -152,29 +152,6 @@ class ParentController extends Controller
         return redirect()->route('parent.transaction.index')->with('success', "Enrollment Success!");
     }
 
-    public function enrolledit(TransactionHeader $enroll){
-        $setting = Controller::getVerse();
-        return view('parent.enroll.form', compact('setting', 'enroll'));
-    }
-
-    public function enrollupdate(TransactionHeader $enroll, Request $request){
-        $data = $request->validate([
-            'name' => 'required|string|max:255',
-            'email' => 'required|email|unique:users,email,'.$enroll->id,
-            'phone_number' => 'required'
-        ]);
-
-        $enroll->update($data);
-
-        return redirect()->route('parent.transaction.index')->with('success', "Children {$enroll->name}'s data updated");
-    }
-
-    public function enrolldestroy(TransactionHeader $enroll){
-        $enroll->delete();
-
-        return redirect()->route('parent.transaction.index')->with('success', 'User deleted.');
-    }
-
     // API Section
     public function students(User $parent){
         return response()->json(
