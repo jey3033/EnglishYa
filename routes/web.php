@@ -11,6 +11,8 @@ use App\Http\Controllers\TermController;
 use App\Http\Controllers\ParentController;
 use App\Http\Controllers\StudentController;
 use App\Http\Controllers\TeacherController;
+use App\Http\Controllers\CalendarController;
+use App\Http\Controllers\ScheduleController;
 use App\Models\Setting;
 use App\Http\Controllers\Controller;
 
@@ -69,6 +71,7 @@ Route::get('/transaction/{transaction}/edit', [TransactionController::class, 'ed
 Route::put('/transaction/{transaction}/update', [TransactionController::class, 'update'])->middleware('auth')->name('transaction.update');
 Route::delete('/transaction/{transaction}', [TransactionController::class, 'destroy'])->middleware('auth')->name('transaction.destroy');
 
+Route::get('/schedule', [ScheduleController::class, 'index'])->middleware('auth')->name('schedule.index');
 
 // Parent Dashboard
 Route::get('/parents', [ParentController::class, 'index'])->name('parent.index');
@@ -86,7 +89,8 @@ Route::get('/parents/transaction', [ParentController::class, 'enrollindex'])->na
 Route::get('/parents/transaction/create', [ParentController::class, 'enrollcreate'])->name('parent.transaction.create');
 Route::post('/parents/transaction', [ParentController::class, 'enrollstore'])->name('parent.transaction.store');
 
-Route::get('/parents/schedule', [ParentScheduleController::class, 'index'])->name('parent.schedule.index');
+Route::get('/parents/schedule', [ParentController::class, 'scheduleindex'])->name('parent.schedule.index');
+
 Route::get('/parents/report', [ParentReportController::class, 'index'])->name('parent.report.index');
 
 // Student Dashboard
@@ -95,12 +99,18 @@ Route::get('/students/mydata', [StudentDataController::class, 'edit'])->name('st
 Route::get('/students/transaction', [StudentController::class, 'enrollindex'])->name('student.transaction.index');
 Route::get('/students/transaction/create', [StudentController::class, 'enrollcreate'])->name('student.transaction.create');
 Route::post('/students/transaction', [StudentController::class, 'enrollstore'])->name('student.transaction.store');
-Route::get('/students/schedule', [StudentDataController::class, 'edit'])->name('student.schedule.index');
+Route::get('/students/schedule', [StudentController::class, 'scheduleindex'])->name('student.schedule.index');
+
 Route::get('/students/report', [StudentDataController::class, 'edit'])->name('student.report.index');
 
 
 // Teacher Dashboard
-Route::get('/teachers', [TeacherController::class, 'index'])->name('teacher.index');
+Route::get('/teacher', [TeacherController::class, 'index'])->name('teacher.index');
+Route::get('/teacher/mydata', [TeacherController::class, 'mydata'])->name('teacher.mydata');
+Route::put('/teacher/mydata', [TeacherController::class, 'update'])->name('teacher.update');
+Route::get('/teacher/schedule', [TeacherController::class, 'schedule'])->name('teacher.schedule.index');
+Route::get('/teacher/meeting', [TeacherController::class, 'index'])->name('teacher.meeting.index');
+Route::get('/teacher/report', [TeacherController::class, 'index'])->name('teacher.report.index');
 
 //API
 Route::get('/parents/{parent}/students', [ParentController::class, 'students'])->name('parent.students');
@@ -108,3 +118,4 @@ Route::get('/parents/{parent}/students', [ParentController::class, 'students'])-
 // Misc
 Route::get('/profile-picture', [UserController::class, 'editProfilePictureForm'])->name('users.profile.edit');
 Route::post('/profile-picture', [UserController::class, 'updateProfilePicture'])->name('users.profile.update');
+Route::get('/calendar/{year}/{month}', [CalendarController::class, 'calendar'])->name('calendar.month');

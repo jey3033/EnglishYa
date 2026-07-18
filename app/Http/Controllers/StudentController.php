@@ -65,4 +65,9 @@ class StudentController extends Controller
 
         return redirect()->route('student.transaction.index')->with('success', "Enrollment Success!");
     }
+
+    public function scheduleindex() {
+        $setting = Controller::getVerse();
+        return view('student.schedule.index', compact('setting'));
+    }
 }

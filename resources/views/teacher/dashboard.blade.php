@@ -1,9 +1,9 @@
 @extends('layouts.app')
 
-@section('title', 'Student Dashboard')
+@section('title', 'Teacher Dashboard')
 
 @section('content')
 <main class="">
-    <x-calendar />
+    Hello, {{ Auth::user()->name }}
 </main>
 @endsection

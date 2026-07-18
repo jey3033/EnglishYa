@@ -17,10 +17,8 @@ return new class extends Migration
             $table->time('time');
             $table->text('lesson_plan');
             $table->string('term');
-            $table->foreignId('parent_id')->constrained('users');
-            $table->foreignId('student_id')->constrained('users');
             $table->foreignId('teacher_id')->constrained('users');
-            $table->foreignId('transaction_detail_id')->constrained('transaction_details');
+            $table->foreignId('transaction_detail_id')->nullable()->constrained('transaction_details');
             $table->timestamps();
             $table->softDeletes();
         });

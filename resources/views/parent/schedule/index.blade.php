@@ -1,9 +1,9 @@
 @extends('layouts.app')
 
-@section('title', 'Student Dashboard')
+@section('title', 'My Children Schedule')
 
 @section('content')
 <main class="">
     <x-calendar />
-</main>
+<main class="">
 @endsection

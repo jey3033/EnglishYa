@@ -165,7 +165,7 @@
     }   
 
     .card-header{
-        @apply flex items-center mb-4;
+        @apply flex items-center;
     }
 
     .card-icon{
@@ -311,6 +311,89 @@
     .danger{
         @apply bg-danger text-white;
     }
+
+    /* Calendar */
+    .calendar{
+        @apply rounded-lg overflow-hidden border border-border;
+    }
+
+    .calendar-content{
+        @apply w-full bg-primary;
+        display:grid;
+        grid-template-columns:repeat(7,1fr);
+        border-top:1px solid var(--color-border);
+        border-left:1px solid var(--color-border);
+    }
+    
+    .calendar-header{
+         @apply flex justify-around items-center bg-primary text-white p-4;
+    }
+
+    .calendar-weekday{
+        @apply bg-card font-bold text-center py-3;
+        border-right:1px solid var(--color-border);
+        border-bottom:1px solid var(--color-border);
+    }
+
+    .calendar-day{
+        min-height:160px;
+        border-right:1px solid var(--color-border);
+        border-bottom:1px solid var(--color-border);
+        padding:.5rem;
+        position:relative;
+        background:var(--color-card);
+    }
+
+    .other-month{
+        background-color: grey;
+    }
+
+    .calendar-day:hover{
+        background:var(--color-card-hover);
+        color: var(--color-white);
+        cursor: pointer;
+    }
+
+    .other-month:hover{
+        background-color: var(--color-muted);
+        cursor:default;
+    }
+
+    .calendar-date{
+        font-weight:700;
+        margin-bottom:.5rem;
+    }
+
+    .calendar-event{
+        display:flex;
+        align-items:center;
+        gap:.5rem;
+        padding:.35rem .5rem;
+        border-radius:.5rem;
+        margin-bottom:.35rem;
+        font-size:.8rem;
+        cursor:pointer;
+    }
+
+    .calendar-event.available{
+        background:var(--color-success-light);
+    }
+
+    .calendar-event.booked{
+        background:var(--color-info-light);
+    }
+
+    .calendar-event.holiday{
+        background:var(--color-danger-light);
+    }
+
+    .teacher-color{
+        width:10px;
+        height:10px;
+        border-radius:9999px;
+        flex-shrink:0;
+    }
+
 }
 /* Third Party Stuff */
 /* ---------- Tom Select ---------- */
@@ -384,3 +467,4 @@
 .full .ts-control{
     background-color: var(--color-primary) !important;
 }
+

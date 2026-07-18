@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Database\Eloquent\Concerns\HasUuids;
 
@@ -34,14 +35,9 @@ class Meeting extends Model
         ];
     }
 
-    public function parent(): BelongsTo
+    public function students(): BelongsToMany
     {
-        return $this->belongsTo(User::class, 'parent_id');
-    }
-
-    public function student(): BelongsTo
-    {
-        return $this->belongsTo(User::class, 'student_id');
+        return $this->belongsToMany(User::class, 'meeting_student');
     }
 
     public function teacher(): BelongsTo

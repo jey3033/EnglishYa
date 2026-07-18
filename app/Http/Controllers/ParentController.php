@@ -152,6 +152,11 @@ class ParentController extends Controller
         return redirect()->route('parent.transaction.index')->with('success', "Enrollment Success!");
     }
 
+    public function scheduleindex(){
+        $setting = Controller::getVerse();
+        return view('parent.schedule.index', compact('setting'));
+    }
+
     // API Section
     public function students(User $parent){
         return response()->json(
