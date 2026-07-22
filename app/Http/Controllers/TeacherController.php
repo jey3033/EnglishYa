@@ -20,21 +20,26 @@ class TeacherController extends Controller
 
     public function update(Request $request){
         $data = $request->validate([
+            'color' => 'nullable|regex:/^#[0-9A-Fa-f]{6}$/',
             'profile_picture' => 'nullable|image|mimes:jpg,jpeg,png,webp|max:20480',
         ]);
 
-        
+        $user = Auth::user();
 
         if ($request->hasFile('profile_picture')) {
             $path = $request->file('profile_picture')
                 ->store('profile-pictures', 'public');
+
+            $user->profile_path = $path;
         }
 
-        if (isset($path)) {
-            Auth::user()->update(['profile_path' => $path]);
+        if ($request->filled('color')) {
+            $user->color = $request->color;
         }
 
-        return back()->with('success', "data has been updated");
+        $user->save();
+
+        return back()->with('success', 'Data has been updated');
     }
 
     public function schedule(){

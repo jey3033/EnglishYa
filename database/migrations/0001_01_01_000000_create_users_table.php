@@ -20,6 +20,7 @@ return new class extends Migration
             $table->tinyInteger('is_active')->default(1);
             $table->string('profile_path')->nullable();
             $table->timestamp('email_verified_at')->nullable();
+            $table->string('color')->nullable();
             $table->string('password');
             $table->foreignId('parent_id')->nullable;
             $table->rememberToken();

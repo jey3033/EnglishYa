@@ -202,6 +202,10 @@
         @apply w-full text-left;
     }
 
+    .hoverable:hover{
+        @apply bg-primary-light cursor-pointer;
+    }
+
     /* ---------- Forms ---------- */
 
     .login-form{

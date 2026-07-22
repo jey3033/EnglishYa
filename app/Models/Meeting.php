@@ -10,16 +10,17 @@ use Illuminate\Database\Eloquent\Concerns\HasUuids;
 
 class Meeting extends Model
 {
-    use SoftDeletes, HasUuids;
+    use SoftDeletes;
 
     protected $fillable = [
+        'uuid',
         'date',
-        'time',
+        'start',
+        'end',
         'lesson_plan',
-        'term',
-        'parent_id',
-        'student_id',
         'teacher_id',
+        'transaction_detail_id',
+        'status'
     ];
 
     public function getRouteKeyName()

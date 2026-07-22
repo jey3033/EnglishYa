@@ -112,6 +112,7 @@ Route::get('/teacher/schedule', [TeacherController::class, 'schedule'])->name('t
 Route::get('/teacher/meeting', [TeacherController::class, 'index'])->name('teacher.meeting.index');
 Route::get('/teacher/report', [TeacherController::class, 'index'])->name('teacher.report.index');
 
+
 //API
 Route::get('/parents/{parent}/students', [ParentController::class, 'students'])->name('parent.students');
 
@@ -119,3 +120,5 @@ Route::get('/parents/{parent}/students', [ParentController::class, 'students'])-
 Route::get('/profile-picture', [UserController::class, 'editProfilePictureForm'])->name('users.profile.edit');
 Route::post('/profile-picture', [UserController::class, 'updateProfilePicture'])->name('users.profile.update');
 Route::get('/calendar/{year}/{month}', [CalendarController::class, 'calendar'])->name('calendar.month');
+Route::get('/meetings/date/{date}', [MeetingController::class, 'byDate'])->name('meeting.by.date');
+Route::post('/meeting', [MeetingController::class, 'store'])->name('meeting.post');

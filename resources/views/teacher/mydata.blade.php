@@ -27,11 +27,7 @@
         @csrf
         @method('PUT')
         <div class="info-div flex justify-center">
-            <img
-                src="{{ Auth::user()->profile_path ? asset('storage/' . Auth::user()->profile_path) : "https://api.dicebear.com/9.x/personas/svg?seed=".Auth::user()->name }}"
-                alt="Profile Picture"
-                class="profile-picture"
-            />
+            <x-avatar size="xl" :user="Auth::User()" />
         </div>
         <div class="info-div">
             <label for="name">Name: {{ Auth::user()->name }}</label>
@@ -42,6 +38,10 @@
         <div class="info-div">
             <label for="profile_picture">Profile Picture</label>
             <input type="file" name="profile_picture" accept="image/*" class="form-input">
+        </div>
+        <div class="info-div flex items-center">
+            <label for="color" class="me-5">Calendar Color</label>
+            <input type="color" id="color" name="color" value="{{ old('color', Auth::user()->color ?? '#7469B6') }}" class="h-12 w-24 cursor-pointer border rounded">
         </div>
         <div class="flex justify-center mt-5">
             <button type="submit" class="btn bg-primary self-center">Save</button> 

@@ -6,18 +6,11 @@ use App\Models\Meeting;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Str;
+use Carbon\Carbon;
 
 class MeetingController extends Controller
 {
-    public function __construct()
-    {
-        $this->middleware(function ($request, $next) {
-            if (Auth::user()?->role !== 'admin') {
-                abort(403, 'Access denied. Admin only.');
-            }
-            return $next($request);
-        })->except(['index', 'show']);
-    }
 
     public function index()
     {
@@ -47,17 +40,20 @@ class MeetingController extends Controller
     {
         $request->validate([
             'date' => 'required|date',
-            'time' => 'required',
-            'lesson_plan' => 'required|string',
-            'term' => 'required|string',
-            'parent_id' => 'required|exists:users,id',
-            'student_id' => 'required|exists:users,id',
-            'teacher_id' => 'required|exists:users,id',
+            'start' => 'required',
+            'end' => 'required',
         ]);
 
-        Meeting::create($request->only(['date', 'time', 'lesson_plan', 'term', 'parent_id', 'student_id', 'teacher_id']));
+        Meeting::create([
+            'uuid' => Str::uuid(),
+            'date' => $request->date,
+            'start' => $request->start,
+            'end' => $request->end,
+            'teacher_id' => Auth::user()->id,
+            'status' => 'available',
+        ]);
 
-        return redirect()->route('meetings.index')->with('success', 'Meeting created successfully.');
+        return response()->json('Meeting is saved');;
     }
 
     public function show(Meeting $meeting)
@@ -104,5 +100,11 @@ class MeetingController extends Controller
         $meeting->delete();
 
         return redirect()->route('meetings.index')->with('success', 'Meeting deleted successfully.');
+    }
+
+    public function byDate($date){
+        $meetings = Meeting::where('teacher_id', Auth::id())->whereDate('date', Carbon::parse($date))->get();
+
+        return response()->json($meetings);
     }
 }

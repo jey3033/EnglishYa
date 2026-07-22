@@ -15,10 +15,12 @@
             </div>
             {{-- Future meetings go here --}}
             <div class="calendar-events">
-                {{-- Example --}}
-                {{-- <div class="calendar-event bg-success">
-                    Jeremy
-                </div> --}}
+                @foreach($day['meetings'] as $meeting)
+                        <span class="teacher-color"
+                            style="background: {{ Auth::user()->color }}">
+                        </span>
+                        {{ \Carbon\Carbon::parse($meeting->start)->format('H:i') }}
+                @endforeach
             </div>
         </div>
     @endforeach

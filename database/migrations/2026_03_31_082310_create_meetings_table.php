@@ -14,11 +14,12 @@ return new class extends Migration
         Schema::create('meetings', function (Blueprint $table) {
             $table->id();
             $table->date('date');
-            $table->time('time');
-            $table->text('lesson_plan');
-            $table->string('term');
+            $table->time('start');
+            $table->time('end');
+            $table->text('lesson_plan')->nullable();
             $table->foreignId('teacher_id')->constrained('users');
             $table->foreignId('transaction_detail_id')->nullable()->constrained('transaction_details');
+            $table->enum('status', ['available', 'booked'])->default('available');
             $table->timestamps();
             $table->softDeletes();
         });

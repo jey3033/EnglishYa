@@ -34,6 +34,7 @@ class User extends Authenticatable
         'profile_path',
         'parent_id',
         'password',
+        'color',
     ];
 
     /**
@@ -88,5 +89,10 @@ class User extends Authenticatable
     public function meetings(): BelongsToMany
     {
         return $this->belongsToMany(Meeting::class, 'meeting_student');
+    }
+
+    public function teaches(): HasMany
+    {
+        return $this->HasMany(Meeting::class, 'teacher_id');
     }
 }
