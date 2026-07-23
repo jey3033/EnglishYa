@@ -88,7 +88,7 @@ class User extends Authenticatable
 
     public function meetings(): BelongsToMany
     {
-        return $this->belongsToMany(Meeting::class, 'meeting_student');
+        return $this->belongsToMany(Meeting::class, 'meeting_student', 'student_id', 'meeting_id');
     }
 
     public function teaches(): HasMany

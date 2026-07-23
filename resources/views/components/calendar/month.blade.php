@@ -16,10 +16,14 @@
             {{-- Future meetings go here --}}
             <div class="calendar-events">
                 @foreach($day['meetings'] as $meeting)
-                        <span class="teacher-color"
-                            style="background: {{ Auth::user()->color }}">
-                        </span>
-                        {{ \Carbon\Carbon::parse($meeting->start)->format('H:i') }}
+                        <div class="calendar-detail">
+                            <span class="status-dot {{ $meeting->students->isNotEmpty() ? 'booked' : 'available' }}"></span>
+                            {{ \Carbon\Carbon::parse($meeting->start)->format('H:i') }} - {{ \Carbon\Carbon::parse($meeting->end)->format('H:i') }}
+
+                            @if($meeting->students->isNotEmpty())
+                                ({{ $meeting->students->count() }})
+                            @endif
+                        </div>
                 @endforeach
             </div>
         </div>

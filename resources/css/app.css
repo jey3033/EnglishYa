@@ -379,19 +379,20 @@
         cursor:pointer;
     }
 
-    .calendar-event.available{
-        background:var(--color-success-light);
-    }
-
-    .calendar-event.booked{
+    .status-dot.available{
         background:var(--color-info-light);
     }
 
-    .calendar-event.holiday{
+    .status-dot.booked{
+        background:var(--color-success-light);
+    }
+
+    .status-dot.holiday{
         background:var(--color-danger-light);
     }
 
-    .teacher-color{
+    .status-dot{
+        display: inline-block;
         width:10px;
         height:10px;
         border-radius:9999px;

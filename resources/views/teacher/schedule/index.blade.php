@@ -98,6 +98,8 @@
         })
 
         $('#confirm-availability').click(function(){
+            let modal = $(this).closest('.modal').attr('id');
+
             $.ajax({
                 url:'/meeting',
                 type:'POST',
@@ -108,11 +110,30 @@
                     end:selectedEnd
                 },
                 success:function(){
-                    $('#availability-modal').addClass('hidden');
+                    closeModal(modal);
+                    showToast('success', 'Meeting Created');
 
                     loadMeetingTable(selectedDate);
                 }
             });
+        });
+
+        function closeModal(type) {
+            let modal = $('#'+type);
+            let content = modal.find('.modal-content');
+
+            modal.addClass('opacity-0');
+            content.removeClass('scale-100 translate-y-0 opacity-100');
+            content.addClass('scale-95 translate-y-4 opacity-0');
+
+            setTimeout(() => {
+                modal.addClass('hidden').removeClass('flex');
+            }, 200);
+        }
+
+        $(document).on('click', '.overlay', function (e) {
+            let modal = $(this).closest('.modal').attr('id');
+            closeModal(modal);
         });
     });
 </script>

@@ -9,6 +9,8 @@
     <script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-" crossorigin="anonymous"></script>
 </head>
 <body>
+    <x-toast />
+
     <div class="flex min-h-screen">
         @include('components.sidebar.'.Auth::User()->role)
         <div class="bg-background flex flex-1 flex-col">
@@ -22,6 +24,24 @@
     <script>
     function dismissError() {
         document.getElementById('alert').style.display = 'none';
+    }
+
+    function showToast(type, message){
+        let toast = $('#toast');
+        toast.attr('variant', type);
+        toast.find('[id$="-message"]').text(message);
+        toast.removeClass('hidden');
+
+        setTimeout(function(){
+            toast.removeClass('opacity-0 translate-x-8');
+        },10);
+
+        setTimeout(function(){
+            toast.addClass('opacity-0 translate-x-8');
+            setTimeout(function(){
+                toast.addClass('hidden');
+            },300);
+        },3000);
     }
     </script>
 </body>

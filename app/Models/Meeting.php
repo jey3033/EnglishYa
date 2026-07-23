@@ -38,7 +38,7 @@ class Meeting extends Model
 
     public function students(): BelongsToMany
     {
-        return $this->belongsToMany(User::class, 'meeting_student');
+        return $this->belongsToMany(User::class, 'meeting_student', 'meeting_id', 'student_id');
     }
 
     public function teacher(): BelongsTo
